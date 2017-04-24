@@ -1,0 +1,39 @@
+body {
+    padding:25px;
+}
+
+h6 {
+    padding:0px;
+    margin:0px;
+    font-size: 0px;
+}
+
+footer {
+    margin-top:50px;
+}
+
+label, legend {
+    display:inline  ;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+input, textarea, select {
+    display:inline;
+    margin-top:10px;
+    margin-bottom:10px  ;
+}
+
+input[type='checkbox'], input[type='radio'] {
+    display:inline;
+    margin-top:10px;
+    margin-bottom:10px  ;
+}
+
+#tblAmortSchedule, #tblAmortSchedule th, #tblAmortSchedule td {
+    border-style:solid;
+    border-width: thin;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 800px;
+}
