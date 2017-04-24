@@ -24,7 +24,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
+        //adding schema for database feature (4/20/2017)
+        \Schema::defaultStringLength(191);
     }
 }

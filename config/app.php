@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'a4',
+    'name' => 'assignment - a4',
 
     /*
     |--------------------------------------------------------------------------
@@ -230,7 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        
+
 
     ],
 
