@@ -179,7 +179,7 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
-
+        Gbrock\Table\Providers\TableServiceProvider::class,
     ],
 
     /*
@@ -230,7 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-
+        'Table' => Gbrock\Table\Facades\Table::class,
 
     ],
 

@@ -22,19 +22,19 @@ class CreateScenariosTable extends Migration
                 		# remaining fields
                     $table->integer('scenario_number');
                     $table->string('scenario_name');
-                		$table->decimal('loan_amount');
+                		$table->double('loan_amount');
                 		$table->double('interest_rate_annual');
                 		$table->double('interest_rate_monthly');
                 		$table->string('interest_type');
                 		$table->integer('loan_duration_years');
                 		$table->integer('loan_duration_months');
-                		$table->integer('loan_monthly_payment');
-                    $table->decimal('interest_total_paid');
+                		$table->double('loan_monthly_payment');
+                    $table->double('interest_total_paid');
                     $table->double('interest_rate_average');
-                    $table->decimal('loan_total_cost');
+                    $table->double('loan_total_cost');
                     $table->integer('loan_payments_count');
-
-                		# FYI: We're skipping the 'tags' field for now; more on that later.
+                    $table->integer('property_id')->unsigned();
+                    # FYI: We're skipping the 'tags' field for now; more on that later.
 
                 	});
     }

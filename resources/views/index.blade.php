@@ -47,6 +47,7 @@
         <!--submit & reset buttons -->
         <input type='submit' name='submit' class='btn btn-primary btn-small'>
         <input type='button' name='reset' class='btn btn-primary btn-small' onclick="parent.location='index.php'" value='Reset Form'>
+
         <!--Reference: Technique for reset button, got ideas from Piazza forum and this website:
         http://www.plus2net.com/html_tutorial/button-linking.php -->
   </form>
@@ -100,6 +101,7 @@
           Number Payments : {{$loanMonths}}<br/>
           From: {{$array_date[1]}} to {{$array_date[$loanMonths]}}
         </div>
+        <input type='button' name='save' class='btn btn-primary btn-small' onclick="parent.location='/scenario/save'" value='Save Scenario'>
     @endif
 @endsection
 

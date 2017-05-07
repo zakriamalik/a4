@@ -10,6 +10,61 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+# main app routes
+Route::get('/', 'MortCalcController@index');
+Route::get('/process', 'MortCalcController@process');
+Route::get('/readme', 'MortCalcController@readme');
+
+
+Route::get('/scenario', 'MortCalcController@scenarioMenu');
+Route::get('/property', 'MortCalcController@propertyMenu');
+
+Route::get('/scenario/viewAll', 'MortCalcController@viewAllScenario');
+Route::get('/scenario/view', 'MortCalcController@loadScenario');
+Route::get('/scenario/view/{id}', 'MortCalcController@viewScenario');
+
+Route::get('/property/viewAll', 'MortCalcController@viewAllProperty');
+Route::get('/property/view', 'MortCalcController@loadProperty');
+Route::get('/property/view/{prop_id}', 'MortCalcController@viewProperty');
+
+Route::get('/scenario/save', 'MortCalcController@addScenario');
+Route::post('/scenario/save', 'MortCalcController@saveScenario');
+
+Route::get('/property/save', 'MortCalcController@addProperty');
+Route::post('/property/save', 'MortCalcController@saveProperty');
+
+Route::get('/scenario/search', 'MortCalcController@searchScenario');
+# Get route to show a form to edit an existing scenario
+Route::get('/scenario/load', 'MortCalcController@loadScenario');
+Route::get('/property/load', 'MortCalcController@loadProperty');
+
+Route::get('/scenario/change', 'MortCalcController@loadScenario');
+Route::get('/scenario/update/{scenario_number}', 'MortCalcController@selectScenario');
+Route::post('/scenario/update', 'MortCalcController@updateScenario');
+
+Route::get('/property/change', 'MortCalcController@loadProperty');
+Route::get('/property/update/{prop_id}', 'MortCalcController@selectProperty');
+Route::post('/property/update', 'MortCalcController@updateProperty');
+
+Route::get('/scenario/delete', 'MortCalcController@loadScenario');
+# Get route to confirm removal of scenario from the database
+Route::get('/scenario/remove/{id}', 'MortCalcController@stageRemoval');
+# Post route to actually remove the scenario
+Route::post('/scenario/remove', 'MortCalcController@removeScenario');
+
+Route::get('/property/delete', 'MortCalcController@loadProperty');
+# Get route to confirm removal of scenario from the database
+Route::get('/property/remove/{prop_id}', 'MortCalcController@stagePropertyRemoval');
+# Post route to actually remove the scenario
+Route::post('/property/remove', 'MortCalcController@removeProperty');
+
+
+# conditional log viewer route based on app environment
+if(config('app.env')=='local'){
+    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+}
+
 #Test if DB is working
 Route::get('/debug', function() {
 
@@ -46,13 +101,3 @@ Route::get('/debug', function() {
 	echo '</pre>';
 
 });
-
-# main app routes
-Route::get('/', 'MortCalcController@index');
-Route::get('/process', 'MortCalcController@process');
-Route::get('/readme', 'MortCalcController@readme');
-
-# conditional log viewer route based on app environment
-if(config('app.env')=='local'){
-    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-}

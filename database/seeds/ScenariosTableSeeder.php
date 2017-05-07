@@ -29,6 +29,7 @@ class ScenariosTableSeeder extends Seeder
         'interest_rate_average' => 0.333,
         'loan_total_cost' => 145101.86,
         'loan_payments_count' => 240,
+        'property_id' => 1,
         ]);
 
         Scenario::insert([
@@ -47,6 +48,7 @@ class ScenariosTableSeeder extends Seeder
         'interest_rate_average' => 0.333,
         'loan_total_cost' => 171536.18,
         'loan_payments_count' => 360,
+        'property_id' => 1,
         ]);
 
         Scenario::insert([
@@ -65,6 +67,7 @@ class ScenariosTableSeeder extends Seeder
         'interest_rate_average' => 0.417,
         'loan_total_cost' => 192838.95,
         'loan_payments_count' => 360,
+        'property_id' => 1,
         ]);
 
         Scenario::insert([
@@ -83,6 +86,7 @@ class ScenariosTableSeeder extends Seeder
         'interest_rate_average' => 0.333,
         'loan_total_cost' => 290204.01,
         'loan_payments_count' => 240,
+        'property_id' => 2,
         ]);
 
         Scenario::insert([
@@ -90,7 +94,7 @@ class ScenariosTableSeeder extends Seeder
         'updated_at' => Carbon\Carbon::now()->toDateTimeString(),
         'scenario_number' => 5,
         'scenario_name' => 'omega',
-        'loan_amount' => 200000,
+        'loan_amount' => 250000,
         'interest_rate_annual' => 4.0,
         'interest_rate_monthly' => 0.333,
         'interest_type' => 'fixed',
@@ -101,6 +105,7 @@ class ScenariosTableSeeder extends Seeder
         'interest_rate_average' => 0.333,
         'loan_total_cost' => 343072.39,
         'loan_payments_count' => 360,
+        'property_id' => 2,
         ]);
 
         Scenario::insert([
@@ -119,6 +124,7 @@ class ScenariosTableSeeder extends Seeder
         'interest_rate_average' => 0.417,
         'loan_total_cost' => 385678.21,
         'loan_payments_count' => 360,
+        'property_id' => 2,
         ]);
 
     }

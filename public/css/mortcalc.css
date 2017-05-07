@@ -37,3 +37,9 @@ input[type='checkbox'], input[type='radio'] {
     padding-right: 5px;
     width: 800px;
 }
+
+
+#loanTotalPayments, #loanTotalCost, #interestRateAvg, #interestTotalPaid,
+#loanMonthlyPayment, #loanDurationMonthly, #interestRateMonthly {
+
+}

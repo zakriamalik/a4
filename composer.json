@@ -10,7 +10,8 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "rap2hpoutre/laravel-log-viewer": "^0.9.0",
-        "rych/random": "^0.1.0"
+        "rych/random": "^0.1.0",
+        "gbrock/laravel-table": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
