@@ -20,11 +20,11 @@
       @foreach ($properties as $properties)
           ({{$properties->property_number}})
           @if(Request::path()=='property/view')
-                <a href="{{ url('/property/view',$properties->prop_id) }}">{{$properties->property_name}}</a>.
+                <a href="{{ url('/property/view',$properties->id) }}">{{$properties->property_name}}</a>.
           @elseif(Request::path()=='property/change')
-                <a href="{{ url('/property/update',$properties->prop_id) }}">{{$properties->property_name}}</a>.
+                <a href="{{ url('/property/update',$properties->id) }}">{{$properties->property_name}}</a>.
           @elseif(Request::path()=='property/delete')
-                <a href="{{ url('/property/remove',$properties->prop_id) }}">{{$properties->property_name}}</a>.
+                <a href="{{ url('/property/remove',$properties->id) }}">{{$properties->property_name}}</a>.
           @endif
           </br>
           {{-- http://stackoverflow.com/questions/39639707/right-way-to-build-a-link-in-laravel-5-3 --}}

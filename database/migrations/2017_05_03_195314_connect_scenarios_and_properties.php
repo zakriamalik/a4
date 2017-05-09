@@ -15,7 +15,7 @@ class ConnectScenariosAndProperties extends Migration
      {
          Schema::table('scenarios', function (Blueprint $table) {
      		    # property_number is a foreign key that joins the two tables together
-            $table->foreign('property_id')->references('prop_id')->on('properties');
+            $table->foreign('property_id')->references('id')->on('properties');
 
          });
      }

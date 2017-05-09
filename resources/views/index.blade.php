@@ -47,9 +47,9 @@
         <!--submit & reset buttons -->
         <input type='submit' name='submit' class='btn btn-primary btn-small'>
         <input type='button' name='reset' class='btn btn-primary btn-small' onclick="parent.location='index.php'" value='Reset Form'>
-
         <!--Reference: Technique for reset button, got ideas from Piazza forum and this website:
         http://www.plus2net.com/html_tutorial/button-linking.php -->
+        
   </form>
 
 @endsection

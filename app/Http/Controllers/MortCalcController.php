@@ -147,10 +147,10 @@ class MortCalcController extends Controller
 
   public function saveScenario(Request $request) {
 
+              # retrieving model info
+              $properties = Property::all();
 
-          $properties = Property::all();
-
-              #access the request using this and apply laravel validation rules on inputs
+              # access the request using this and apply laravel validation rules on inputs
               $this->validate($request,[
                 'scenarioNumber' => 'required|numeric|min:1|max:100000000',
                 'scenarioName' => 'required|alpha_num',
@@ -250,10 +250,7 @@ class MortCalcController extends Controller
               $scenario->property_id = $propertyId;
 
               $scenario->save();
-              Session::flash('message', 'The mortgage loan scenario '.$request->scenarioName.' was saved in the database.');
-              # Redirect the user to index page
-              # return redirect('/scneario');
-
+              #Session::flash('message', 'The mortgage loan scenario '.$request->scenarioName.' was saved in the database.');
 
           # return of values back to the view
           return view('scenario.save')->with([
@@ -279,10 +276,10 @@ class MortCalcController extends Controller
               'interestRateAvg'=>Round($interestRateAvg, 3),
               'loanTotalCost'=>number_format($loanTotalCost, 2, '.', ','),
               'array_date'=>$array_date,
-                'propertySelect' => $propertyId,
-                'properties' => $properties,
+              'propertySelect' => $propertyId,
+              'properties' => $properties,
             ]);
-  }
+  }#end of saveScenario Method
 
 
     public function viewAllScenario() {
@@ -314,19 +311,19 @@ class MortCalcController extends Controller
     # First get a scenario to view
     $scenario = Scenario::find($id);
     $propertySelect = $scenario->property_id;
-    $properties = Property::where('prop_id',$propertySelect)->get();
+    $properties = Property::where('id',$propertySelect)->get();
     $featureProperties = FeatureProperty::where('property_id',$propertySelect)->get();
     #$feature_ids = $featureProperties->lists('property_id')->all();
     #dump($feature_ids);
     #$featureList = $featuresProperties->feature_id;
-    #$features = Feature::where('feat_id',$featureList)->get();
+    #$features = Feature::where('id',$featureList)->get();
     #$feature_id = Mortgage::table('feature_property')->select('feature_id')->where('property_id',$propertySelect)->get();
-    #$features = Feature::where('feat_id')
+    #$features = Feature::where('id')
     $array_feature=[];
     foreach ($featureProperties as $featureProperty) {
         $array_feature[]=$featureProperty->feature_id;
     }
-    $features = Feature::whereIn('feat_id',$array_feature)->get();
+    $features = Feature::whereIn('id',$array_feature)->get();
     # Leveraged idea from here: http://stackoverflow.com/questions/17605693/laravel-4-eloquent-orm-select-where-array-as-parameter
 
     #dump($features);
@@ -429,6 +426,10 @@ class MortCalcController extends Controller
         # Save the changes
         #$scenario->save();
         #return redirect('/scenario/view/'.$id);
+
+
+
+
         return view('scenario.view')->with([
                  'id'=> $id,
                 'scenario' => $scenario,
@@ -441,63 +442,56 @@ class MortCalcController extends Controller
 
 
     public function searchScenario(Request $request) {
-        #access the request using this and apply laravel validation rules on inputs
+        # leveraged class notes dwa15.com
+        // #access the request using this and apply laravel validation rules on inputs
         // $this->validate($request,[
-        //   'searchText' => 'required|alpha_num'
+        //   'searchText' => 'required|alpha_num',
         // ]);
 
-        # Start with an empty array of search results; scenarios that
-        # match our search query will get added to this array
+        # Start with an empty array of search results; scenarios that matches search query and populates array
         $searchResults = [];
         $resultCount='';
         # Store the searchText in a variable for easy access
-        # The second parameter (null) is what the variable
-        # will be set to *if* searchTerm is not in the request.
-
-
         $searchText = $request->input('searchText', null);
-
-            # Only try and search *if* there's a searchTerm
+        # Only try and search *if* there's a searchTerm
         if($searchText) {
             # Leveraged lecture example to create this method
-
-            $scenario = new Scenario();
+            #$scenario = new Scenario();
+            $scenario = Scenario::All();
 
             if($request->has('similarSearch')) {
-                $scenarios = $scenario->where('scenario_name', 'LIKE', "%{$searchText}%")->get();
-                $resultCount = $scenario->where('scenario_name', 'LIKE', "%{$searchText}%")->get()->count();
+                $scenarios = $scenario->where('scenario_name', 'LIKE', $searchText);
+                $resultCount = $scenario->where('scenario_name', 'LIKE', $searchText)->count();
+
             }
             else {
-                $scenarios = $scenario->where('scenario_name', 'LIKE', $searchText)->get();
-                $resultCount = $scenario->where('scenario_name', 'LIKE', $searchText)->get()->count();
-            }
-            #tip on fuzzy search https://softonsofa.com/laravel-searchable-the-best-package-for-eloquent/
-            #dump($scenarios->toArray());
-            $table = Table::create($scenarios);
-            #dump($table);
+                $scenarios = $scenario->where('scenario_name', 'LIKE', $searchText);
+                $resultCount = $scenario->where('scenario_name', 'LIKE', $searchText)->count();
+            } #end of nested if
+
+            # foreach loop for case senstive search
             foreach($scenarios as $scenario_name => $scenario) {
                 # Case sensitive boolean check for a match
-                #dump($request->has('caseSensitive'));
-
                 if($request->has('caseSensitive')) {
                     $match = $scenario['scenario_name'] == $searchText;
-
                 }
                 # Case insensitive boolean check for a match
                 else {
                     $match = strtolower($scenario['scenario_name']) == strtolower($searchText);
-
-                }
-                # If it was a match, add it to our results
-
+                } #end of nested if
+                # If it was a match, add it to the results
                 if($match) {
                     $searchResults[] = $scenario['scenario_name'];
                 }
                 else {
+                # do nothing
+                } #end of nested if
 
-                }
+            } #end of foreach
 
-            }
+            # gbrock laravel table package, populate table with searched array
+            $table = Table::create($scenarios);
+            # Return view with searched scenario in a table along with relavent info
             return view('scenario.search', ['table' => $table])->with([
                  'searchText' => $searchText,
                  'caseSensitive' => $request->has('caseSensitive'),
@@ -508,11 +502,10 @@ class MortCalcController extends Controller
         }
         else {
           return view('scenario.search');
-        }
-        # Return the view, with the searchTerm *and* searchResults (if any)
+        } #end of top level if logic
 
 
-    }
+    } #end of search method
 
 
     public function loadScenario() {
@@ -549,12 +542,12 @@ class MortCalcController extends Controller
     public function updateScenario(Request $request) {
 
     # Find a scenario to update
-    $scenario = Scenario::find($request->dbrow_id);
+    $scenario = Scenario::find($request->id);
     $properties = Property::all();
 
-    dump($request->dbrow_id);
-    dump($request);
-    dump($scenario->loan_duration_years);
+    // dump($request->id);
+    // dump($request);
+    // dump($scenario->loan_duration_years);
     if(!$scenario) {
         dump("Scenario not found, can't update.");
     }
@@ -661,7 +654,7 @@ class MortCalcController extends Controller
 
         # Save the changes
         $scenario->save();
-        return redirect('/scenario/update/'.$request->dbrow_id);
+        return redirect('/scenario/update/'.$request->id);
         dump('Update complete; check the database to confirm the update worked.');
     }
   }
@@ -682,17 +675,17 @@ class MortCalcController extends Controller
 
 
   public function removeScenario(Request $request) {
-
-  # First get a scenario to delete
+  # leverage code from class notes http://dwa15.com
+  # First get a scenario to delete using model retrieval
   $scenario = Scenario::find($request->id);
-
+  # if scenario is not found, error messsage, else confirm removal
   if(!$scenario) {
-      dump('Did not delete- Scenario not found.');
+      Session::flash('message', 'Scenario not found.');
   }
   else {
       $scenario->delete();
-      dump('Deletion complete; check the database to see if it worked...');
-      return redirect('/scenario/load');
+      Session::flash('message', 'Scenario was successfully removed.');
+      return redirect('/scenario/delete');
   }
 }
 
@@ -713,9 +706,9 @@ public function loadProperty() {
     //     return redirect('scenario/viewAll');
     // }
     #$selectedScenario = $scenario->where('scenario_name',$request->scenarioSelect);
-    $prop_id = $properties->pluck('prop_id');
+    $id = $properties->pluck('id');
     return view('property.load')->with([
-        'prop_id' => $prop_id,
+        'id' => $id,
         'properties' => $properties
     ]);
 
@@ -730,19 +723,19 @@ public function viewAllProperty() {
 }
 
 
-public function viewProperty($prop_id) {
+public function viewProperty($id) {
 
     # First get a scenario to view
-    #properties = Property::find($prop_id);
+    #properties = Property::find($id);
     #$propertySelect = $scenario->property_id;
-    $properties = Property::where('prop_id',$prop_id)->first();
+    $properties = Property::where('id',$id)->first();
     #dump($properties);
-    $featureProperties = FeatureProperty::where('property_id', $prop_id)->get();
+    $featureProperties = FeatureProperty::where('property_id', $id)->get();
     $array_feature=[];
     foreach ($featureProperties as $featureProperty) {
         $array_feature[]=$featureProperty->feature_id;
     }
-    $features = Feature::whereIn('feat_id',$array_feature)->get();
+    $features = Feature::whereIn('id',$array_feature)->get();
     # Leveraged idea from here: http://stackoverflow.com/questions/17605693/laravel-4-eloquent-orm-select-where-array-as-parameter
 
     if(!$properties) {
@@ -751,7 +744,7 @@ public function viewProperty($prop_id) {
     else {
                     # get data from the saved scenario and format/calculate for display
     return view('property.view')->with([
-             'prop_id'=> $prop_id,
+             'id'=> $id,
             'properties' => $properties,
             'features' => $features,
          ]);
@@ -833,16 +826,15 @@ public function saveProperty(Request $request) {
 
 
 
-    public function selectProperty($prop_id) {
-        $properties = Property::where('prop_id',$prop_id)->first();
-
+    public function selectProperty($id) {
+        $properties = Property::find($id);
         $features = Feature::All();
         // if(is_null($scenariosSearch)) {
         //     Session::flash('message', 'Scenario not found.');
         //     return redirect('scenario/viewAll');
         // }
         return view('property.update')->with([
-            'prop_id'=> $prop_id,
+            'id'=> $id,
            'features' => $features,
            'properties' => $properties,
         ]);
@@ -852,11 +844,11 @@ public function saveProperty(Request $request) {
     public function updateProperty(Request $request) {
 
     # Find a property to update
-    $properties = Property::find($request->prop_id);
+    $properties = Property::find($request->id);
     $features = Feature::all();
 
-    dump($request->prop_id);
-    dump($request);
+    // dump($request->id);
+    // dump($request);
     if(!$properties) {
         dump("Property not found, can't update.");
     }
@@ -878,17 +870,17 @@ public function saveProperty(Request $request) {
                     ]);
 
                     # get loan data from the form using request and format/calculate for display
-                    $propertyNumber = $request->input('propertyNumber');
-                    $propertyName = $request->input('propertyName');
-                    $propertyAddress = $request->input('propertyAddress');
-                    $propertyType = $request->input('propertyType');
-                    $propertySize = $request->input('propertySize');
-                    $livingArea = $request->Input('livingArea');
-                    $lotSize = $request->input('lotSize');
-                    $yearBuilt = $request->input('yearBuilt');
-                    $salePrice = $request->input('salePrice');
-                    $taxRate = $request->input('taxRate');
-                    $hoaYearly = $request->input('hoaYearly');
+                    $propertyNumber = $request->propertyNumber;
+                    $propertyName = $request->propertyName;
+                    $propertyAddress = $request->propertyAddress;
+                    $propertyType = $request->propertyType;
+                    $propertySize = $request->propertySize;
+                    $livingArea = $request->livingArea;
+                    $lotSize = $request->lotSize;
+                    $yearBuilt = $request->yearBuilt;
+                    $salePrice = $request->salePrice;
+                    $taxRate = $request->taxRate;
+                    $hoaYearly = $request->hoaYearly;
 
                     #Save scenario to the database
                     $properties->property_number = $propertyNumber;
@@ -905,14 +897,14 @@ public function saveProperty(Request $request) {
                     # Save the changes
                     $properties->save();
 
-        return redirect('/property/update/'.$request->prop_id);
+        return redirect('/property/update/'.$request->id);
         dump('Update complete; check the database to confirm the update worked.');
     }
   }
 
-  public function stagePropertyRemoval($prop_id) {
+  public function stagePropertyRemoval($id) {
       # Get the scenario they're attempting to delete
-      $properties = Property::where('prop_id', $prop_id)->first();
+      $properties = Property::where('id', $id)->first();
       if(!$properties) {
           Session::flash('message', 'Property not found.');
           return redirect('/property/viewAll');
@@ -924,17 +916,187 @@ public function saveProperty(Request $request) {
   public function removeProperty(Request $request) {
 
   # First get a scenario to delete
-  $properties = Property::where('prop_id', $request->prop_id)->first();
+  $properties = Property::where('id', $request->id)->first();
   if(!$properties) {
       dump('Did not delete- Property not found.');
   }
   else {
       #$properties->delete();
-      Property::where('prop_id', $request->prop_id)->delete();
+      Property::where('id', $request->id)->delete();
       dump('Deletion complete; check the database to see if it worked...');
       return redirect('/property/delete');
   }
 }
 
+
+public function loadFeatures() {
+    $properties = Property::All();
+    // if(is_null($scenariosSearch)) {
+    //     Session::flash('message', 'Scenario not found.');
+    //     return redirect('scenario/viewAll');
+    // }
+    #$selectedScenario = $scenario->where('scenario_name',$request->scenarioSelect);
+    $id = $properties->pluck('id');
+    return view('property.loadFeatures')->with([
+        'id' => $id,
+        'properties' => $properties
+    ]);
+
+}
+
+            public function viewFeatures($id) {
+
+                $features = Feature::All();
+                $properties = Property::where('id',$id)->first();
+                $propertyfeatures = FeatureProperty::where('property_id', $id)->get();
+
+                $array_feature=[];
+                foreach ($propertyfeatures as $propertyfeature) {
+                    $array_feature[]=$propertyfeature->feature_id;
+                }
+                $featureSelected = Feature::whereIn('id',$array_feature)->get();
+
+
+                //$property = Property::where('id',$id)->first();
+                //foreach($property->features as $feature) {
+                    //
+                    //dump($feature);
+                    //}
+               //$featuresForCheckboxes = Feature::getFeaturesForCheckboxes();
+
+                // if(is_null($scenariosSearch)) {
+                //     Session::flash('message', 'Scenario not found.');
+                //     return redirect('scenario/viewAll');
+                // }
+                return view('property.viewFeatures')->with([
+                    'id'=> $id,
+                   'features' => $features,
+                   'properties' => $properties,
+                   'propertyfeatures' => $propertyfeatures,
+                   'featureSelected' => $featureSelected,
+                ]);
+              //  return redirect('/scenario/update/'.$id);
+            }
+
+            public function addFeatures($id) {
+
+                $features = Feature::All();
+                $properties = Property::find($id);
+                $propertyfeatures = FeatureProperty::where('property_id', $id)->get();
+
+                $array_feature=[];
+                foreach ($propertyfeatures as $propertyfeature) {
+                    $array_feature[]=$propertyfeature->feature_id;
+                }
+                $featureSelected = Feature::whereIn('id',$array_feature)->get();
+
+
+                //$property = Property::where('id',$id)->first();
+                //foreach($property->features as $feature) {
+                    //
+                    //dump($feature);
+                    //}
+               //$featuresForCheckboxes = Feature::getFeaturesForCheckboxes();
+
+                // if(is_null($scenariosSearch)) {
+                //     Session::flash('message', 'Scenario not found.');
+                //     return redirect('scenario/viewAll');
+                // }
+                return view('property.addfeatures')->with([
+                    'id'=> $id,
+                   'features' => $features,
+                   'properties' => $properties,
+                   'propertyfeatures' => $propertyfeatures,
+                   'featureSelected' => $featureSelected,
+                ]);
+              //  return redirect('/scenario/update/'.$id);
+            }
+
+            public function saveFeatures(Request $request) {
+            # Find a property to update
+            $features = Feature::All();
+            $propertyfeatures = FeatureProperty::All();
+
+            // if(!$propertyfeatures) {
+            //     dump("Property not found, can't update.");
+            // }
+            // else {
+
+            $property_id = $request->id;
+            $feature_id = $request->input('featureSelect');
+            dump($property_id);
+            dump($feature_id);
+            #Save scenario to the database
+            $propertyfeatures = new FeatureProperty();
+            $propertyfeatures->property_id = $property_id;
+            $propertyfeatures->feature_id = $feature_id;
+            # Save the changes
+            $propertyfeatures->save();
+
+                return redirect('/property/viewfeatures/'.$request->id);
+                dump('Update complete; check the database to confirm the update worked.');
+            //}
+            }
+
+            public function removeFeature($id) {
+                # Get the scenario they're attempting to delete
+
+            $features = Feature::All();
+            $properties = Property::find($id);
+            $propertyfeatures = FeatureProperty::where('property_id', $id)->get();
+
+            $array_feature=[];
+            foreach ($propertyfeatures as $propertyfeature) {
+                $array_feature[]=$propertyfeature->feature_id;
+            }
+            $featureSelected = Feature::whereIn('id',$array_feature)->get();
+
+
+            //$property = Property::where('id',$id)->first();
+            //foreach($property->features as $feature) {
+                //
+                //dump($feature);
+                //}
+           //$featuresForCheckboxes = Feature::getFeaturesForCheckboxes();
+
+            // if(is_null($scenariosSearch)) {
+            //     Session::flash('message', 'Scenario not found.');
+            //     return redirect('scenario/viewAll');
+            // }
+            return view('property.removefeature')->with([
+                'id'=> $id,
+               'features' => $features,
+               'properties' => $properties,
+               'propertyfeatures' => $propertyfeatures,
+               'featureSelected' => $featureSelected,
+            ]);
+
+            }
+
+
+            public function deleteFeature(Request $request) {
+
+            # First get a scenario to delete
+            $properties = Property::where('id', $request->id)->first();
+            $propertyfeatures = FeatureProperty::where('property_id', $request->id)->get();
+
+            $array_feature=[];
+            foreach ($propertyfeatures as $propertyfeature) {
+                $array_feature[]=$propertyfeature->feature_id;
+            }
+            $featureSelected = Feature::whereIn('id',$array_feature)->get();
+
+            if(!$propertyfeatures) {
+                dump('Did not delete- Property Feature not found.');
+            }
+            else {
+                #$properties->delete();
+                FeatureProperty::where('property_id', $request->id)->where('feature_id', $request->featureSelect)->delete();
+                dump('Deletion complete; check the database to see if it worked...');
+                return redirect('/property/viewfeatures/'.$request->id);
+            }
+
+
+          }
 
 }

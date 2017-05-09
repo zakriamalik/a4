@@ -16,7 +16,7 @@ class CreateFeaturesTable extends Migration
         //
         Schema::create('features', function (Blueprint $table) {
         # auto-increment primary key
-        $table->increments('feat_id');
+        $table->increments('id');
         # timestamp columns: `created_at` and `updated_at`
         $table->timestamps();
         # remaining fields

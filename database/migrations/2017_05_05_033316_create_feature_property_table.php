@@ -16,7 +16,7 @@ class CreateFeaturePropertyTable extends Migration
          //
          Schema::create('feature_property', function (Blueprint $table) {
 
-         $table->increments('join_id');
+         $table->increments('id');
          $table->timestamps();
 
          # `property_id` and `feature_id` will be foreign keys, so they have to be unsigned
@@ -26,8 +26,8 @@ class CreateFeaturePropertyTable extends Migration
          $table->integer('feature_id')->unsigned();
 
          # Make foreign keys
-         $table->foreign('property_id')->references('prop_id')->on('properties');
-         $table->foreign('feature_id')->references('feat_id')->on('features');
+         $table->foreign('property_id')->references('id')->on('properties');
+         $table->foreign('feature_id')->references('id')->on('features');
 
      });
      }

@@ -11,93 +11,120 @@
 |
 */
 
-# main app routes
+# main app route for home page
 Route::get('/', 'MortCalcController@index');
+# get route for mortgage payment calculator
 Route::get('/process', 'MortCalcController@process');
+# get route for readme file
 Route::get('/readme', 'MortCalcController@readme');
-
-
+# get route for mortgage loan scenario landing page
 Route::get('/scenario', 'MortCalcController@scenarioMenu');
+# get route for real estate property landing page
 Route::get('/property', 'MortCalcController@propertyMenu');
 
+# get triple set routes for viewing mortgage loan scenarios from the database - view all or view one at a time
 Route::get('/scenario/viewAll', 'MortCalcController@viewAllScenario');
 Route::get('/scenario/view', 'MortCalcController@loadScenario');
 Route::get('/scenario/view/{id}', 'MortCalcController@viewScenario');
 
+# get triple set routes for viewing real estate properties from the database - view all or view one at a time
 Route::get('/property/viewAll', 'MortCalcController@viewAllProperty');
 Route::get('/property/view', 'MortCalcController@loadProperty');
-Route::get('/property/view/{prop_id}', 'MortCalcController@viewProperty');
+Route::get('/property/view/{id}', 'MortCalcController@viewProperty');
 
+# get/post couplet routes to save a mortgage loan scenario to the database with embedded recalculation feature
 Route::get('/scenario/save', 'MortCalcController@addScenario');
 Route::post('/scenario/save', 'MortCalcController@saveScenario');
 
+# get/post couplet routes to save a real estate property info to the database
 Route::get('/property/save', 'MortCalcController@addProperty');
 Route::post('/property/save', 'MortCalcController@saveProperty');
 
+# get route to search a mortgage loan scenario from the database
 Route::get('/scenario/search', 'MortCalcController@searchScenario');
-# Get route to show a form to edit an existing scenario
+# get route to search a real estate property from the database
+Route::get('/property/search', 'MortCalcController@searchProperty');
+
+# get routes to show a list of items for view, add new, update/remoev an existing item
 Route::get('/scenario/load', 'MortCalcController@loadScenario');
 Route::get('/property/load', 'MortCalcController@loadProperty');
+Route::get('/property/loadfeatures', 'MortCalcController@loadFeatures');
 
+# get/post routes triple setup to update an existing mortgage loan scenario in the database
 Route::get('/scenario/change', 'MortCalcController@loadScenario');
-Route::get('/scenario/update/{scenario_number}', 'MortCalcController@selectScenario');
+Route::get('/scenario/update/{id}', 'MortCalcController@selectScenario');
 Route::post('/scenario/update', 'MortCalcController@updateScenario');
 
+# get/post routes triple setup to update an existing real estate property listing in the database
 Route::get('/property/change', 'MortCalcController@loadProperty');
-Route::get('/property/update/{prop_id}', 'MortCalcController@selectProperty');
+Route::get('/property/update/{id}', 'MortCalcController@selectProperty');
 Route::post('/property/update', 'MortCalcController@updateProperty');
 
+# get/post routes triple setup to remove an existing mortgage loan scenario from the database
 Route::get('/scenario/delete', 'MortCalcController@loadScenario');
-# Get route to confirm removal of scenario from the database
 Route::get('/scenario/remove/{id}', 'MortCalcController@stageRemoval');
-# Post route to actually remove the scenario
 Route::post('/scenario/remove', 'MortCalcController@removeScenario');
 
+# get/post routes triple setup to remove an existing real estate property listing from the database
 Route::get('/property/delete', 'MortCalcController@loadProperty');
-# Get route to confirm removal of scenario from the database
-Route::get('/property/remove/{prop_id}', 'MortCalcController@stagePropertyRemoval');
-# Post route to actually remove the scenario
+Route::get('/property/remove/{id}', 'MortCalcController@stagePropertyRemoval');
 Route::post('/property/remove', 'MortCalcController@removeProperty');
 
+# get routes to show a features tied to an existing real estate property using join pivot table
+Route::get('/property/viewfeatures', 'MortCalcController@loadFeatures');
+Route::get('/property/viewfeatures/{id}', 'MortCalcController@viewFeatures');
+
+# get/post routes add features to an existing real estate property using join pivot table
+Route::get('/property/increasefeatures', 'MortCalcController@loadFeatures');
+Route::get('/property/addfeatures/{id}', 'MortCalcController@addFeatures');
+Route::post('/property/addfeatures', 'MortCalcController@saveFeatures');
+
+# get/post routes remove features from an existing real estate property using join pivot table
+Route::get('/property/decreasefeatures', 'MortCalcController@loadFeatures');
+Route::get('/property/removefeature/{id}', 'MortCalcController@removeFeature');
+Route::post('/property/removefeature', 'MortCalcController@deleteFeature');
+
+# Reference: The routing techniques are leveraged from class lectures posted on http://dwa15.com/
 
 # conditional log viewer route based on app environment
 if(config('app.env')=='local'){
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 }
 
-#Test if DB is working
-Route::get('/debug', function() {
-
-	echo '<pre>';
-
-	echo '<h1>Environment</h1>';
-	echo App::environment().'</h1>';
-
-	echo '<h1>Debugging?</h1>';
-	if(config('app.debug')) echo "Yes"; else echo "No";
-
-	echo '<h1>Database Config</h1>';
-    	echo 'DB defaultStringLength: '.Illuminate\Database\Schema\Builder::$defaultStringLength;
-    	/*
-	The following commented out line will print your MySQL credentials.
-	Uncomment this line only if you're facing difficulties connecting to the database and you
-        need to confirm your credentials.
-        When you're done debugging, comment it back out so you don't accidentally leave it
-        running on your production server, making your credentials public.
-        */
-	//print_r(config('database.connections.mysql'));
-
-	echo '<h1>Test Database Connection</h1>';
-	try {
-		$results = DB::select('SHOW DATABASES;');
-		echo '<strong style="background-color:green; padding:5px;">Connection confirmed</strong>';
-		echo "<br><br>Your Databases:<br><br>";
-		print_r($results);
-	}
-	catch (Exception $e) {
-		echo '<strong style="background-color:crimson; padding:5px;">Caught exception: ', $e->getMessage(), "</strong>\n";
-	}
-
-	echo '</pre>';
-
-});
+# Test if DB is working
+# Code used from the class lecture notes
+// Route::get('/debug', function() {
+//
+// 	echo '<pre>';
+//
+// 	echo '<h1>Environment</h1>';
+// 	echo App::environment().'</h1>';
+//
+// 	echo '<h1>Debugging?</h1>';
+// 	if(config('app.debug')) echo "Yes"; else echo "No";
+//
+// 	echo '<h1>Database Config</h1>';
+//     	echo 'DB defaultStringLength: '.Illuminate\Database\Schema\Builder::$defaultStringLength;
+//     	/*
+// 	The following commented out line will print your MySQL credentials.
+// 	Uncomment this line only if you're facing difficulties connecting to the database and you
+//         need to confirm your credentials.
+//         When you're done debugging, comment it back out so you don't accidentally leave it
+//         running on your production server, making your credentials public.
+//         */
+// 	//print_r(config('database.connections.mysql'));
+//
+// 	echo '<h1>Test Database Connection</h1>';
+// 	try {
+// 		$results = DB::select('SHOW DATABASES;');
+// 		echo '<strong style="background-color:green; padding:5px;">Connection confirmed</strong>';
+// 		echo "<br><br>Your Databases:<br><br>";
+// 		print_r($results);
+// 	}
+// 	catch (Exception $e) {
+// 		echo '<strong style="background-color:crimson; padding:5px;">Caught exception: ', $e->getMessage(), "</strong>\n";
+// 	}
+//
+// 	echo '</pre>';
+//
+// });

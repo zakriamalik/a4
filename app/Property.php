@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Property extends Model
 {
 
-        protected $appends = ['fullName'];
-        public function getFullNameAttribute() {
-        return '../scenario/update/'. $this->attributes['prop_id'];
-        }
+        // protected $appends = ['fullName'];
+        // public function getFullNameAttribute() {
+        // return '../scenario/update/'. $this->attributes['id'];
+        // }
 
         //identify relationship in the the model
         public function scenarios() {

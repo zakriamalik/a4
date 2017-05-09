@@ -1,4 +1,4 @@
-{{-- /resources/views/scenario.blade.php --}}
+{{-- /resources/views/property.blade.php --}}
 @extends('layouts.master')
 
 @section('title')
@@ -7,13 +7,17 @@
 
 @section('form_content')
  <h2>Real Estate Property List Management</h2>
-    <!--List of scenarios displayed for user to click select for respective CRUD database actions -->
+    <!--List of real estate property listings displayed for user to click select for respective CRUD database actions -->
     <ul>
-      <a href="{{ url('/property','viewAll') }}">ViewAll Saved Properties</a></br>
-      <a href="{{ url('/property','view') }}">View a single Property</a></br>
-      <a href="{{ url('/property','save') }}">Save a New Properties</a></br>
-      <a href="{{ url('/property','change') }}">Update an Existing Property</a></br>
-      <a href="{{ url('/property','delete') }}">Remove an Existing Property</a></br>
+      <a href="{{ url('/property','viewAll') }}">ViewAll Saved Properties Listings</a></br>
+      <a href="{{ url('/property','view') }}">View a single Property Listing</a></br>
+      <a href="{{ url('/property','save') }}">Save a New Property Listing</a></br>
+      <a href="{{ url('/property','change') }}">Update an Existing Property Listing</a></br>
+      <a href="{{ url('/property','delete') }}">Remove an Existing Property Listing</a></br>
+      <a href="{{ url('/property','viewfeatures') }}">View Features of an Existing Property Listing</a></br>
+      <a href="{{ url('/property','increasefeatures') }}">Add Features to an Existing Property Listing</a></br>
+      <a href="{{ url('/property','decreasefeatures') }}">Remove Features from Existing Property Listing</a></br>
+
     </ul>
 @endsection
 
@@ -31,7 +35,6 @@
 @section('loancost_content')
     <!--Hosting url/hyperlink back to the Mortgage Payment Calculator -->
     <h6>&nbsp;</h6>
-    <p><a href="/index.php">Mortgage Payment Calculator</a></p>
 @endsection
 
 @section('amorttbl_content')

@@ -10,8 +10,9 @@
     <!--List of scenarios displayed for user to click select for respective CRUD database actions -->
     <ul>
       <a href="{{ url('/scenario','viewAll') }}">ViewAll Saved Scenarios</a></br>
-      <a href="{{ url('/scenario','view') }}">View a Saved Scenarios</a></br>
-      <a href="{{ url('/scenario','save') }}">Save a New Scenarios</a></br>
+      <a href="{{ url('/scenario','view') }}">View a Saved Scenario</a></br>
+      <a href="{{ url('/scenario','search') }}">Search a Saved Scenario</a></br>
+      <a href="{{ url('/scenario','save') }}">Save a New Scenario</a></br>
       <a href="{{ url('/scenario','change') }}">Update an Existing Scenario</a></br>
       <a href="{{ url('/scenario','delete') }}">Remove an Existing Scenario</a></br>
     </ul>
@@ -31,7 +32,6 @@
 @section('loancost_content')
     <!--Hosting url/hyperlink back to the Mortgage Payment Calculator -->
     <h6>&nbsp;</h6>
-    <p><a href="/index.php">Mortgage Payment Calculator</a></p>
 @endsection
 
 @section('amorttbl_content')

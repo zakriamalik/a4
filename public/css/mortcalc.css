@@ -30,7 +30,7 @@ input[type='checkbox'], input[type='radio'] {
     margin-bottom:10px  ;
 }
 
-#tblAmortSchedule, #tblAmortSchedule th, #tblAmortSchedule td {
+table, th, td {
     border-style:solid;
     border-width: thin;
     padding-left: 5px;
@@ -38,8 +38,10 @@ input[type='checkbox'], input[type='radio'] {
     width: 800px;
 }
 
-
-#loanTotalPayments, #loanTotalCost, #interestRateAvg, #interestTotalPaid,
-#loanMonthlyPayment, #loanDurationMonthly, #interestRateMonthly {
-
+#tblAmortSchedule, #tblAmortSchedule th, #tblAmortSchedule td {
+    border-style:solid;
+    border-width: thin;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 800px;
 }

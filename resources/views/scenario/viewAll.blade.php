@@ -1,29 +1,35 @@
-{{-- /resources/views/readme.blade.php --}}
+{{-- /resources/views/scenario/viewAll.blade.php --}}
+{{-- blade view to all loan scenarios saved in the database --}}
+
 @extends('layouts.master')
 
 @section('title')
-  All Mortgage Payment Saved Scenarios
+  View all Mortgage Loan Scenarios
 @endsection
 
 @section('form_content')
-  <h4>Mortgage Payments - All Scenarios</h4>
+  <h4>Mortgage Payments - All Scenarios Saved in the database</h4>
+  {{-- Reference: Used outside package 'laravel tables' from gbrock -> https://github.com/gbrock/laravel-table --}}
   <table> {!! $table->render() !!} </table>
-  <p><a href="/scenario">Mortgage Scenario Landing Page</a></p>
-  <p><a href="/index.php">Mortgage Payment Calculator</a></p>
+
 @endsection
 
 @section('error_content')
+  <!--blade template placeholder section, satisfies html validator requirements -->
   <h6>&nbsp;</h6>
 @endsection
 
 @section('mortcalc_content')
+  <!--blade template placeholder section, satisfies html validator requirements -->
   <h6>&nbsp;</h6>
 @endsection
 
 @section('loancost_content')
+  <!--blade template placeholder section, satisfies html validator requirements -->
   <h6>&nbsp;</h6>
 @endsection
 
 @section('amorttbl_content')
+  <!--blade template placeholder section, satisfies html validator requirements -->
   <h6>&nbsp;</h6>
 @endsection

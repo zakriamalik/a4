@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
     <link rel="stylesheet" href="/css/mortcalc.css">
         @stack('head')
 </head>
@@ -18,6 +19,14 @@
 
       <header>
 
+            <nav>
+                <ul>
+                        <li><a href='/'>Mortgage Payment Calculator</a></li>
+                        <li><a href='/readme'>Readme</a></li>
+                        <li><a href='/scenario'>Mortgage Scenario Information</a></li>
+                        <li><a href='/property'>Real Estate Property Information</a></li>
+                </ul>
+            </nav>
       </header>
 
           <section>
@@ -42,7 +51,7 @@
 
       <footer>
               <hr>
-              <p><a href="/readme">Read Me</a></p>
+
       </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

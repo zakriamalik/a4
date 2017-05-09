@@ -16,7 +16,7 @@ class CreatePropertiesTable extends Migration
             // schema to create & build the table
             Schema::create('properties', function (Blueprint $table) {
                     # auto-increment primary key
-                    $table->increments('prop_id');
+                    $table->increments('id');
                     # timestamp columns: `created_at` and `updated_at`
                     $table->timestamps();
                     # remaining fields

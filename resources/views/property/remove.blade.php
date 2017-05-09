@@ -13,7 +13,7 @@
 
            {{ csrf_field() }}
 
-           <input type='hidden' name='prop_id' value='{{ $properties->prop_id }}'?>
+           <input type='hidden' name='id' value='{{ $properties->id }}'?>
 
            <h2>Are you sure you want to remove this property from the database <em>{{ $properties->property_name }}</em>?</h2>
 

@@ -47,7 +47,7 @@
         {{-- <select name='propertySelect' id='propertySelect'>
           <option value='0'>Choose</option>
             @foreach($properties as $properties)
-            <option value='{{$properties->prop_id}}' {{ isset($_POST['propertySelect']) && $_POST['propertySelect']==$properties->prop_id ? 'Selected' : '' }}>{{$properties->property_name}}</option>
+            <option value='{{$properties->id}}' {{ isset($_POST['propertySelect']) && $_POST['propertySelect']==$properties->id ? 'Selected' : '' }}>{{$properties->property_name}}</option>
             @endforeach
         </select></br> --}}
 
