@@ -20,7 +20,7 @@
 
 {{-- conditional routing based on current url; different urls are loaded for current url --}}
   @if(count($scenario) > 0)
-      <h5>(#) Scenario Name</h5>
+      <h5>(#) Scenario Name...{{Request::path()}}</h5>
       <ul>
       @foreach ($scenario as $scenario)
           ({{$scenario->scenario_number}})
