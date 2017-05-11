@@ -973,7 +973,7 @@ public function loadFeatures() {
     // }
     #$selectedScenario = $scenario->where('scenario_name',$request->scenarioSelect);
     $id = $properties->pluck('id');
-    return view('property.loadFeatures')->with([
+    return view('property.loadfeatures')->with([
         'id' => $id,
         'properties' => $properties
     ]);
