@@ -9,12 +9,12 @@
  <h2>Mortgage Loan Scenario Management</h2>
     <!--List of scenarios displayed for user to click select for respective CRUD database actions -->
     <ul>
-      <li><a href="{{ url('/scenario','viewAll') }}">ViewAll Saved Scenarios</a></li><br/>
-      <li><a href="{{ url('/scenario','view') }}">View a Saved Scenario</a></li><br/>
-      <li><a href="{{ url('/scenario','search') }}">Search a Saved Scenario</li></a><br/>
-      <li><a href="{{ url('/scenario','save') }}">Save a New Scenario</a></li><br/>
-      <li><a href="{{ url('/scenario','change') }}">Update an Existing Scenario</a></li><br/>
-      <li><a href="{{ url('/scenario','delete') }}">Remove an Existing Scenario</a></li><br/>
+      <li><a href="{{ url('/scenario','viewAll') }}">ViewAll Saved Scenarios</a></li>
+      <li><a href="{{ url('/scenario','view') }}">View a Saved Scenario</a></li>
+      <li><a href="{{ url('/scenario','search') }}">Search a Saved Scenario</a></li>
+      <li><a href="{{ url('/scenario','save') }}">Save a New Scenario</a></li>
+      <li><a href="{{ url('/scenario','change') }}">Update an Existing Scenario</a></li>
+      <li><a href="{{ url('/scenario','delete') }}">Remove an Existing Scenario</a></li>
     </ul>
 @endsection
 
