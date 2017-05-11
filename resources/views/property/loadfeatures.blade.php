@@ -26,7 +26,7 @@
       <h5>(Property MLS) Property Name</h5>
       <ul>
       @foreach ($properties as $properties)
-          ({{$properties->property_number}})
+          <li>({{$properties->property_number}})
           @if(Request::path()=='property/viewfeatures')
                 <a href="{{ url('/property/viewfeatures',$properties->id) }}">{{$properties->property_name}}</a>
           @elseif(Request::path()=='property/increasefeatures')
@@ -34,11 +34,10 @@
           @elseif(Request::path()=='property/decreasefeatures')
                 <a href="{{ url('/property/removefeature',$properties->id) }}">{{$properties->property_name}}</a>
           @endif
-          </br>
+        </li>
   {{--Reference: Technique leveraged for build a url for conditional routing.
   http://stackoverflow.com/questions/39639707/right-way-to-build-a-link-in-laravel-5-3 --}}
       @endforeach
-
       </ul>
   @endif
 
