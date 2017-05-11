@@ -16,7 +16,7 @@
            {{-- <!--cross site attack defence--> --}}
            {{ csrf_field() }}
            <!--hidden input box for property name to be maintained -->
-           <input type='hidden' name='id' value='{{ $properties->id }}'?>
+           <input type='hidden' name='id' value='{{ $properties->id }}'>
            <!--number input box for property number to be maintained by the user-->
            <label for='propertyNumber'>Property MLS Number:</label>
            <input type='number' id='propertyNumber' name='propertyNumber' value= '{{$properties->property_number}}' disabled><br/>

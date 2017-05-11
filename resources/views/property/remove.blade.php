@@ -16,7 +16,7 @@
            {{-- <!--cross site attack defence--> --}}
            {{ csrf_field() }}
            <!--hidden input box for property name to be maintained -->
-           <input type='hidden' name='id' value='{{ $properties->id }}'?>
+           <input type='hidden' name='id' value='{{ $properties->id }}'>
            <!--Alert message to confirm if user want to remove this listing-->
            <h4>Associated Mortgage Loan Scenarios will also be deleted and Property Features detached.<br/>
              Are you sure you want to remove this property "<em>{{ $properties->property_name }}</em>" from the database?</h4>

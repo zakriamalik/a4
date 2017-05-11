@@ -34,13 +34,13 @@
 
         <!--select dropdown populated from database & eloquent model -->
         <!--only those features are available that are not already specified for the property -->
-        <label for 'featureSelect'>Select a Key Feature to Add</label></br>
+        <label for='featureSelect'>Select a Key Feature to Add</label><br/>
         <select name='featureSelect' id='featureSelect'>
           <option value='0'>Choose</option>
             @foreach($features as $features)
                 <option value='{{$features->id}}'> {{$features->feature_name}}</option>
             @endforeach
-        </select></br>
+        </select><br/>
 
         <!--submit & reset buttons -->
         <input type='submit' name='submit' class='btn btn-primary btn-small' value='save'>
