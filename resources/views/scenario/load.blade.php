@@ -23,7 +23,7 @@
       <h5>(#) Scenario Name</h5>
       <ul>
       @foreach ($scenario as $scenario)
-          ({{$scenario->scenario_number}})
+          <li>({{$scenario->scenario_number}})
           @if(Request::path()=='scenario/view')
                 <a href="{{ url('/scenario/view',$scenario->id) }}">{{$scenario->scenario_name}}</a>
           @elseif(Request::path()=='scenario/change')
@@ -31,7 +31,7 @@
           @elseif(Request::path()=='scenario/delete')
                 <a href="{{ url('/scenario/remove',$scenario->id) }}">{{$scenario->scenario_name}}</a>
           @endif
-          </br>
+        </li>
 {{-- Reference: Technique leveraged to build a dynamic url. http://stackoverflow.com/questions/39639707/right-way-to-build-a-link-in-laravel-5-3 --}}
       @endforeach
       </ul>
