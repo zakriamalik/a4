@@ -66,7 +66,7 @@
         <label for='loanTotalCost'>Total Loan Cost ($):</label>
         <input type='number' id='loanTotalCost' name='loanTotalCost' value= '{{round($scenario->loan_total_cost,2)}}' disabled><br/>
         <!-- read only number box for total loan payments -->
-        <label for='loantotalPayments'>Total Loan Payments ($):</label>
+        <label for='loanTotalPayments'>Total Loan Payments ($):</label>
         <input type='number' id='loanTotalPayments' name='loanTotalPayments' value= '{{$scenario->loan_payments_count}}' disabled><br/>
 
         <!--Start of Property Information Section tied to the loan scenario-->
@@ -78,7 +78,7 @@
             @foreach($properties as $properties)
             <option value='{{$properties->id}}' {{ $scenario->property_id == $properties->id ? 'Selected' : '' }}>{{$properties->property_name}}</option>
             @endforeach
-        </select></br>
+        </select><br/>
         <!-- read only text box for Property Address -->
         <label for='propertyAddress'>Property Address:</label>
         <input type='text' id='propertyAddress' name='propertyAddress' value= '{{$properties->property_address}}' size='50' disabled><br/>
@@ -107,8 +107,8 @@
         <label for='hoaYearly'>Property Yearly HOA ($): </label>
         <input type='number' id='hoaYearly' name='hoaYearly' value= '{{round($properties->hoa_yearly,2)}}' disabled><br/>
         <!-- read only number box to show Estimated Down Payment -->
-        <label for='hoaYearly'>Estimated Down Payment ($): </label>
-        <input type='number' id='hoaYearly' name='hoaYearly' value= '{{$properties->sale_price-$scenario->loan_amount>0 ? round($properties->sale_price,2) - round($scenario->loan_amount,2) : 0}}' disabled><br/>
+        <label for='estDownPmt'>Estimated Down Payment ($): </label>
+        <input type='number' id='estDownPmt' name='estDownPmt' value= '{{$properties->sale_price-$scenario->loan_amount>0 ? round($properties->sale_price,2) - round($scenario->loan_amount,2) : 0}}' disabled><br/>
 
         <!-- feature ul list using forelse loop to extract property features using pivot table -->
         <label>Key Features</label>
