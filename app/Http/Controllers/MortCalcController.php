@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use Gbrock\Table\Facades\Table; # Refernce: Used Table from gbrock git lib https://github.com/gbrock/laravel-table
@@ -10,20 +12,18 @@ use App\Property; # to use the Property Model;
 use App\Feature; # to use the Feature Model;
 use App\FeatureProperty; # to use the FeatureProperty Model;
 
-use Session;
-
 
 class MortCalcController extends Controller
 {
   # main view function - landing page / default for reset
   public function index() {
         return view('index');
-  }
+  } #end of index Method
 
   # readme view function
   public function readme() {
         return view('readme');
-  }
+  } #end of readme Method
 
   # request processing function with validaiton and logic code
   public function process (Request $request) {
@@ -128,26 +128,25 @@ class MortCalcController extends Controller
           'array_date'=>$array_date
         ]);
 
-  }
+  } #end of process Method
 
   public function scenarioMenu() {
           return view('scenario');
-  }
+  } #end of scenarioMenu Method
 
 
   public function addScenario(Request $request) {
-          #$scenarios = Scenario::all();
+          # retrieving property model info to link Scenario with Property
           $properties = Property::all();
-          #$authorsForDropdown = Author::getAuthorsForDropdown();
-          #$propertiesForDropdown = Property::all();
+
           return view('scenario.save')->with([
                 'properties' => $properties,
           ]);
-  }
+  } #end of addScenario Method
 
   public function saveScenario(Request $request) {
 
-              # retrieving model info
+              # retrieving property model info to link Scenario with Property
               $properties = Property::all();
 
               # access the request using this and apply laravel validation rules on inputs
@@ -157,7 +156,8 @@ class MortCalcController extends Controller
                 'loan' => 'required|numeric|min:1|max:100000000',
                 'interestRate' => 'required|numeric|min:1|max:25',
                 'interestType' => 'required|present',
-                'loanDuration' => 'required|not_in:0|min:1|max:30'
+                'loanDuration' => 'required|not_in:0|min:1|max:30',
+                'property'=> 'required|not_in:0',
               ]);
 
               # get loan data from the form using request and format/calculate for display
@@ -169,7 +169,7 @@ class MortCalcController extends Controller
               $interestType = $request->Input('interestType');
               $loanDuration = $request->input('loanDuration');
               $loanMonths = $loanDuration*12;
-              $propertyId = $request->input('propertySelect');
+              $propertyId = $request->input('property');
 
               # Logic: Formulae & Calculations used to determine mortage payments
               if($interestRate>0 && $loanDuration>0 && $loan>0) {
@@ -232,7 +232,7 @@ class MortCalcController extends Controller
               #Reference 4: Learned how to pass array from controller to view in Laravel. http://stackoverflow.com/questions/26251108/form-passing-array-from-controller-to-view-php-laravel
 
 
-              #Save scenario to the database
+              # Save scenario to the database
               $scenario = new Scenario();
               $scenario->scenario_number = $scenarioNumber;
               $scenario->scenario_name = $scenarioName;
@@ -250,7 +250,7 @@ class MortCalcController extends Controller
               $scenario->property_id = $propertyId;
 
               $scenario->save();
-              #Session::flash('message', 'The mortgage loan scenario '.$request->scenarioName.' was saved in the database.');
+              Session::flash('message', 'Confirmation Message: The mortgage loan scenario '.$request->scenarioName.' was saved in the database.');
 
           # return of values back to the view
           return view('scenario.save')->with([
@@ -276,19 +276,20 @@ class MortCalcController extends Controller
               'interestRateAvg'=>Round($interestRateAvg, 3),
               'loanTotalCost'=>number_format($loanTotalCost, 2, '.', ','),
               'array_date'=>$array_date,
-              'propertySelect' => $propertyId,
+              'property' => $propertyId,
               'properties' => $properties,
             ]);
-  }#end of saveScenario Method
+  } #end of saveScenario Method
 
 
     public function viewAllScenario() {
-
+        # retrieving scenario model info
         $scenarios = Scenario::all();
+        # using laravel package gbrock for table display
         $table = Table::create($scenarios);
         return view('scenario.viewAll', ['table' => $table]);
-        #dump($scenarios->toArray());
-    }
+
+    } #end of viewAllScenario Method
 
     //
     // public function selectScenario($id) {
@@ -435,8 +436,30 @@ class MortCalcController extends Controller
                 'scenario' => $scenario,
                 'properties' => $properties,
                 'features' => $features,
-             ]);
-        dump('Update complete; check the database to confirm the update worked.');
+
+                'scenarioNumber' => $scenarioNumber,
+                'scenarioName' => $scenarioName,
+                'loanDisplay'=>number_format($loan, 2, '.', ','),
+                'interestRateDisplay'=>$interestRate,
+                'interestRateMonthlyDisplay'=>Round($interestRateMonthly,3),
+                'interestTypeDisplay'=>$interestType,
+                'loanDurationDisplay'=>$loanDuration,
+                'loanMonths'=>$loanMonths,
+                'monthlyPaymentDisplay'=>number_format($monthlyPayment, 2, '.', ','),
+                'loanTbl'=>$loanTbl,
+                'monthlyPaymentTbl'=>$monthlyPaymentTbl,
+                'array_pmtNo'=>$array_pmtNo,
+                'array_loan'=>$array_loan,
+                'array_interestRateMonthly'=>$array_interestRateMonthly,
+                'array_monthlyPayment'=>$array_monthlyPayment,
+                'array_interest'=>$array_interest,
+                'array_principal'=>$array_principal,
+                'array_loanBalance'=>$array_loanBalance,
+                'interestTotal'=>number_format($interestTotal, 2, '.', ','),
+                'interestRateAvg'=>Round($interestRateAvg, 3),
+                'loanTotalCost'=>number_format($loanTotalCost, 2, '.', ','),
+                'array_date'=>$array_date,
+              ]);
     }
   }
 
@@ -460,13 +483,17 @@ class MortCalcController extends Controller
             $scenario = Scenario::All();
 
             if($request->has('similarSearch')) {
-                $scenarios = $scenario->where('scenario_name', 'LIKE', $searchText);
-                $resultCount = $scenario->where('scenario_name', 'LIKE', $searchText)->count();
-
+                $scenarios = $scenario->where('scenario_name', 'Like', '%'.$searchText.'%');
+                $resultCount = $scenario->where('scenario_name', 'Like', '%'.$searchText.'%')->count();
+                #http://stackoverflow.com/questions/30761950/laravel-5-like-equivalent-eloquent
+                dump($scenarios);
+                dump($resultCount);
             }
             else {
-                $scenarios = $scenario->where('scenario_name', 'LIKE', $searchText);
-                $resultCount = $scenario->where('scenario_name', 'LIKE', $searchText)->count();
+                $scenarios = $scenario->where('scenario_name', 'like', $searchText);
+                $resultCount = $scenario->where('scenario_name', 'like', $searchText)->count();
+                dump($scenarios);
+                dump($resultCount);
             } #end of nested if
 
             # foreach loop for case senstive search
@@ -541,15 +568,12 @@ class MortCalcController extends Controller
 
     public function updateScenario(Request $request) {
 
-    # Find a scenario to update
+    # Find a scenario to update from database and load into the model.
     $scenario = Scenario::find($request->id);
     $properties = Property::all();
 
-    // dump($request->id);
-    // dump($request);
-    // dump($scenario->loan_duration_years);
     if(!$scenario) {
-        dump("Scenario not found, can't update.");
+        Session::flash('message', 'Alert Message: Mortgage Loan Scenario not found in the database, cannot update.');
     }
     else {
 
@@ -560,7 +584,8 @@ class MortCalcController extends Controller
                       'loan' => 'required|numeric|min:1|max:100000000',
                       'interestRateAnnual' => 'required|numeric|min:1|max:25',
                       'interestType' => 'required|present',
-                      'loanDurationYears' => 'required|not_in:0|min:1|max:30'
+                      'loanDurationYears' => 'required|not_in:0|min:1|max:30',
+                      'property'=> 'required|not_in:0'
                     ]);
 
                     # get loan data from the form using request and format/calculate for display
@@ -572,7 +597,7 @@ class MortCalcController extends Controller
                     $interestType = $request->interestType;
                     $loanDuration = $request->loanDurationYears;
                     $loanMonths = $loanDuration*12;
-                    $propertySelect = $request->propertySelect;
+                    $property = $request->property;
 
                     # Logic: Formulae & Calculations used to determine mortage payments
                     if($interestRate>0 && $loanDuration>0 && $loan>0) {
@@ -650,19 +675,18 @@ class MortCalcController extends Controller
                     $scenario->interest_rate_average = $interestRateAvg;
                     $scenario->loan_total_cost = $loanTotalCost;
                     $scenario->loan_payments_count = $loanMonths;
-                    $scenario->property_id = $propertySelect;
+                    $scenario->property_id = $property;
 
-        # Save the changes
-        $scenario->save();
+                    # Save the changes
+                    $scenario->save();
+                    Session::flash('message', 'Confirmation Message: Mortgage Loan Scenario updated.');
+
         return redirect('/scenario/update/'.$request->id);
         dump('Update complete; check the database to confirm the update worked.');
     }
   }
 
-  /**
-  * GET
-  * Page to confirm deletion
-  */
+  # leverage & enhanced removal method from class notes
   public function stageRemoval($id) {
       # Get the scenario they're attempting to delete
       $scenario = Scenario::find($id);
@@ -673,18 +697,17 @@ class MortCalcController extends Controller
       return view('scenario.remove')->with('scenario', $scenario);
   }
 
-
   public function removeScenario(Request $request) {
   # leverage code from class notes http://dwa15.com
   # First get a scenario to delete using model retrieval
   $scenario = Scenario::find($request->id);
   # if scenario is not found, error messsage, else confirm removal
   if(!$scenario) {
-      Session::flash('message', 'Scenario not found.');
+      Session::flash('message', 'Alert Message: Mortgage Loan Scenario not found.');
   }
   else {
       $scenario->delete();
-      Session::flash('message', 'Scenario was successfully removed.');
+      Session::flash('message', 'Confirmation Message: Mortgage Loan Scenario was successfully removed.');
       return redirect('/scenario/delete');
   }
 }
@@ -775,7 +798,9 @@ public function saveProperty(Request $request) {
               'propertyName' => 'required',
               'propertyAddress' => 'required',
               'propertyType' => 'required',
-              'propertySize' => 'required',
+              'propertySizeBd' => 'required|numeric|min:1|max:9',
+              'propertySizeBd' => 'required|numeric|min:1|max:9',
+              'propertySizeBd' => 'required|numeric|min:1|max:9',
               'livingArea' => 'required|numeric|min:1|max:10000',
               'lotSize' => 'required|numeric|min:0.01|max:10000',
               'yearBuilt' => 'required|numeric|min:1000|max:2017',
@@ -789,13 +814,16 @@ public function saveProperty(Request $request) {
             $propertyName = $request->input('propertyName');
             $propertyAddress = $request->input('propertyAddress');
             $propertyType = $request->input('propertyType');
-            $propertySize = $request->input('propertySize');
+            $propertySizeBd = $request->input('propertySizeBd');
+            $propertySizeBa = $request->input('propertySizeBa');
+            $propertySizeGa = $request->input('propertySizeGa');
             $livingArea = $request->Input('livingArea');
             $lotSize = $request->input('lotSize');
             $yearBuilt = $request->input('yearBuilt');
             $salePrice = $request->input('salePrice');
             $taxRate = $request->input('taxRate');
             $hoaYearly = $request->input('hoaYearly');
+            $propertySize = $propertySizeBd.'bd-'.$propertySizeBa.'ba-'.$propertySizeGa.'ga';
 
             #Save scenario to the database
             $properties = new Property();
@@ -813,10 +841,7 @@ public function saveProperty(Request $request) {
 
             $properties->save();
 
-            # Session::flash('message', 'The mortgage loan scenario '.$request->scenarioName.' was saved in the database.');
-            # Redirect the user to index page
-            # return redirect('/scneario');
-
+            Session::flash('message', 'Confirmation Message: The real estate property information was saved to the database successfully.');
 
         # return of values back to the view
         return view('property.save')->with([
@@ -829,6 +854,7 @@ public function saveProperty(Request $request) {
     public function selectProperty($id) {
         $properties = Property::find($id);
         $features = Feature::All();
+
         // if(is_null($scenariosSearch)) {
         //     Session::flash('message', 'Scenario not found.');
         //     return redirect('scenario/viewAll');
@@ -838,8 +864,8 @@ public function saveProperty(Request $request) {
            'features' => $features,
            'properties' => $properties,
         ]);
-      //  return redirect('/scenario/update/'.$id);
-    }
+
+    } #end of selectProperty method
 
     public function updateProperty(Request $request) {
 
@@ -847,10 +873,8 @@ public function saveProperty(Request $request) {
     $properties = Property::find($request->id);
     $features = Feature::all();
 
-    // dump($request->id);
-    // dump($request);
     if(!$properties) {
-        dump("Property not found, can't update.");
+        Session::flash('message', 'Alert Message: The real estate property information not found in the database.');
     }
     else {
 
@@ -860,7 +884,9 @@ public function saveProperty(Request $request) {
                       'propertyName' => 'required',
                       'propertyAddress' => 'required',
                       'propertyType' => 'required',
-                      'propertySize' => 'required',
+                      'propertySizeBd' => 'required|numeric|min:1|max:9',
+                      'propertySizeBd' => 'required|numeric|min:1|max:9',
+                      'propertySizeBd' => 'required|numeric|min:1|max:9',
                       'livingArea' => 'required|numeric|min:1|max:10000',
                       'lotSize' => 'required|numeric|min:0.01|max:10000',
                       'yearBuilt' => 'required|numeric|min:1000|max:2017',
@@ -874,13 +900,16 @@ public function saveProperty(Request $request) {
                     $propertyName = $request->propertyName;
                     $propertyAddress = $request->propertyAddress;
                     $propertyType = $request->propertyType;
-                    $propertySize = $request->propertySize;
+                    $propertySizeBd = $request->propertySizeBd;
+                    $propertySizeBa = $request->propertySizeBa;
+                    $propertySizeGa = $request->propertySizeGa;
                     $livingArea = $request->livingArea;
                     $lotSize = $request->lotSize;
                     $yearBuilt = $request->yearBuilt;
                     $salePrice = $request->salePrice;
                     $taxRate = $request->taxRate;
                     $hoaYearly = $request->hoaYearly;
+                    $propertySize = $propertySizeBd.'bd-'.$propertySizeBa.'ba-'.$propertySizeGa.'ga';
 
                     #Save scenario to the database
                     $properties->property_number = $propertyNumber;
@@ -897,8 +926,10 @@ public function saveProperty(Request $request) {
                     # Save the changes
                     $properties->save();
 
+                    Session::flash('message', 'Confirmation Message: Real Estate Property information updated.');
+
         return redirect('/property/update/'.$request->id);
-        dump('Update complete; check the database to confirm the update worked.');
+
     }
   }
 
@@ -917,13 +948,18 @@ public function saveProperty(Request $request) {
 
   # First get a scenario to delete
   $properties = Property::where('id', $request->id)->first();
+  $featureProperties = FeatureProperty::where('property_id', $request->id)->get();
+  $scenarios = Scenario::where('property_id', $request->id)->get();
   if(!$properties) {
-      dump('Did not delete- Property not found.');
+          Session::flash('message', 'Alert Message: The real estate property information not found in the database.');
   }
   else {
       #$properties->delete();
+      FeatureProperty::where('property_id', $request->id)->delete();
+      Scenario::where('property_id', $request->id)->delete();
       Property::where('id', $request->id)->delete();
-      dump('Deletion complete; check the database to see if it worked...');
+
+      Session::flash('message', 'Confirmation Message: The real estate property information was removed from the database successfully.');
       return redirect('/property/delete');
   }
 }
@@ -955,7 +991,6 @@ public function loadFeatures() {
                     $array_feature[]=$propertyfeature->feature_id;
                 }
                 $featureSelected = Feature::whereIn('id',$array_feature)->get();
-
 
                 //$property = Property::where('id',$id)->first();
                 //foreach($property->features as $feature) {
@@ -989,19 +1024,9 @@ public function loadFeatures() {
                     $array_feature[]=$propertyfeature->feature_id;
                 }
                 $featureSelected = Feature::whereIn('id',$array_feature)->get();
+                $features = $features->whereNotIn('id',$array_feature);
+                # Reference: Use of whereNotIn. http://stackoverflow.com/questions/25849015/laravel-eloquent-where-not-in
 
-
-                //$property = Property::where('id',$id)->first();
-                //foreach($property->features as $feature) {
-                    //
-                    //dump($feature);
-                    //}
-               //$featuresForCheckboxes = Feature::getFeaturesForCheckboxes();
-
-                // if(is_null($scenariosSearch)) {
-                //     Session::flash('message', 'Scenario not found.');
-                //     return redirect('scenario/viewAll');
-                // }
                 return view('property.addfeatures')->with([
                     'id'=> $id,
                    'features' => $features,
@@ -1009,13 +1034,18 @@ public function loadFeatures() {
                    'propertyfeatures' => $propertyfeatures,
                    'featureSelected' => $featureSelected,
                 ]);
-              //  return redirect('/scenario/update/'.$id);
             }
 
             public function saveFeatures(Request $request) {
             # Find a property to update
             $features = Feature::All();
             $propertyfeatures = FeatureProperty::All();
+
+            #access the request using this and apply laravel validation rules on inputs
+            $this->validate($request,[
+              'featureSelect' => 'required|not_in:0',
+            ]);
+
 
             // if(!$propertyfeatures) {
             //     dump("Property not found, can't update.");
@@ -1024,8 +1054,7 @@ public function loadFeatures() {
 
             $property_id = $request->id;
             $feature_id = $request->input('featureSelect');
-            dump($property_id);
-            dump($feature_id);
+
             #Save scenario to the database
             $propertyfeatures = new FeatureProperty();
             $propertyfeatures->property_id = $property_id;
@@ -1033,70 +1062,66 @@ public function loadFeatures() {
             # Save the changes
             $propertyfeatures->save();
 
-                return redirect('/property/viewfeatures/'.$request->id);
-                dump('Update complete; check the database to confirm the update worked.');
+            Session::flash('message', 'Confirmation Message: The key feature is attached to the real estate property and saved to the database successfully.');
+
+            return redirect('/property/addfeatures/'.$request->id);
             //}
             }
 
             public function removeFeature($id) {
-                # Get the scenario they're attempting to delete
+                # retrieve models
+                $features = Feature::All();
+                $properties = Property::find($id);
+                $propertyfeatures = FeatureProperty::where('property_id', $id)->get();
+                # declare array and load up using foreach loop on pivot table
+                $array_feature=[];
+                foreach ($propertyfeatures as $propertyfeature) {
+                    $array_feature[]=$propertyfeature->feature_id;
+                }
+                # loadup variables for feature selection and display
+                $featureSelected = $features->whereIn('id',$array_feature);
+                $featureAmend = $features->whereIn('id',$array_feature);
 
-            $features = Feature::All();
-            $properties = Property::find($id);
-            $propertyfeatures = FeatureProperty::where('property_id', $id)->get();
-
-            $array_feature=[];
-            foreach ($propertyfeatures as $propertyfeature) {
-                $array_feature[]=$propertyfeature->feature_id;
-            }
-            $featureSelected = Feature::whereIn('id',$array_feature)->get();
-
-
-            //$property = Property::where('id',$id)->first();
-            //foreach($property->features as $feature) {
-                //
-                //dump($feature);
-                //}
-           //$featuresForCheckboxes = Feature::getFeaturesForCheckboxes();
-
-            // if(is_null($scenariosSearch)) {
-            //     Session::flash('message', 'Scenario not found.');
-            //     return redirect('scenario/viewAll');
-            // }
-            return view('property.removefeature')->with([
-                'id'=> $id,
-               'features' => $features,
-               'properties' => $properties,
-               'propertyfeatures' => $propertyfeatures,
-               'featureSelected' => $featureSelected,
-            ]);
-
-            }
-
-
-            public function deleteFeature(Request $request) {
-
-            # First get a scenario to delete
-            $properties = Property::where('id', $request->id)->first();
-            $propertyfeatures = FeatureProperty::where('property_id', $request->id)->get();
-
-            $array_feature=[];
-            foreach ($propertyfeatures as $propertyfeature) {
-                $array_feature[]=$propertyfeature->feature_id;
-            }
-            $featureSelected = Feature::whereIn('id',$array_feature)->get();
-
-            if(!$propertyfeatures) {
-                dump('Did not delete- Property Feature not found.');
-            }
-            else {
-                #$properties->delete();
-                FeatureProperty::where('property_id', $request->id)->where('feature_id', $request->featureSelect)->delete();
-                dump('Deletion complete; check the database to see if it worked...');
-                return redirect('/property/viewfeatures/'.$request->id);
-            }
-
+                // if(is_null($scenariosSearch)) {
+                //     Session::flash('message', 'Scenario not found.');
+                //     return redirect('scenario/viewAll');
+                // }
+                return view('property.removefeature')->with([
+                    'id'=> $id,
+                   'features' => $features,
+                   'properties' => $properties,
+                   'propertyfeatures' => $propertyfeatures,
+                   'featureSelected' => $featureSelected,
+                   'featureAmend' => $featureAmend,
+                ]);
 
           }
+
+
+          public function deleteFeature(Request $request) {
+            # retrieve models
+            $properties = Property::where('id', $request->id)->first();
+            $propertyfeatures = FeatureProperty::where('property_id', $request->id)->get();
+            #access the request using this and apply laravel validation rules on inputs
+            $this->validate($request,[
+              'featureSelect' => 'required|not_in:0',
+            ]);
+            # declare array and load up using foreach loop on pivot table
+            $array_feature=[];
+            foreach ($propertyfeatures as $propertyfeature) {
+                $array_feature[]=$propertyfeature->feature_id;
+            }
+            # retrieve features for the property for removal
+            $featureSelected = Feature::whereIn('id',$array_feature)->get();
+            #perform delete operation;
+            FeatureProperty::where('property_id', $request->id)->where('feature_id', $request->featureSelect)->delete();
+
+            Session::flash('message', 'Confirmation Message: The key feature is removed and detached from the real estate property and the database successfully.');
+            # return back to the removal form
+            return redirect('/property/removefeature/'.$request->id);
+            }
+
+
+
 
 }

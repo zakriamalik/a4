@@ -47,10 +47,10 @@
 
         <!--select downdown for property name populated by database, to attach property listing to the loan scenario using laravel model and database joins -->
         <!--leveraged example from class notes http://dwa15.com -->
-        <select name='propertySelect' id='propertySelect'>
+        <select name='property' id='property'>
           <option value='0'>Choose</option>
             @foreach($properties as $properties)
-            <option value='{{$properties->id}}' {{ isset($_POST['propertySelect']) && $_POST['propertySelect']==$properties->id ? 'Selected' : '' }}>{{$properties->property_name}}</option>
+            <option value='{{$properties->id}}' {{ isset($_POST['property']) && $_POST['property']==$properties->id ? 'Selected' : '' }}>{{$properties->property_name}}</option>
             @endforeach
         </select></br>
 
@@ -99,7 +99,7 @@
           Average Interest Rate (Monthly): {{$interestRateAvg}}% <br/>
           Total Loan Cost: ${{$loanTotalCost}} <br/>
           Number Payments : {{$loanMonths}} <br/>
-          Property Id: {{$propertySelect}} <br/>
+          Property Id: {{$property}} <br/>
 
         </div>
     @endif

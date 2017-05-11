@@ -1,4 +1,4 @@
-{{-- /resources/views/search.blade.php --}}
+{{-- /resources/views/scenario/search.blade.php --}}
 {{-- blade view to searche loan scenario saved in the database and display using table package; leveraged class notes http://dwa15.com --}}
 
 @extends('layouts.master')

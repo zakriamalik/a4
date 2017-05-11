@@ -1,4 +1,6 @@
-{{-- /resources/views/index.blade.php --}}
+{{-- /resources/views/property/remove.blade.php --}}
+{{-- blade view to remove a property listing from the database --}}
+
 @extends('layouts.master')
 
 @section('title')
@@ -6,41 +8,42 @@
 @endsection
 
 @section('form_content')
- <h2>Remove Real Estate Property Information from Database</h2>
+ <h2>Remove a Real Estate Property Information from Database</h2>
 
-   <h3>Confirm deletion</h3>
+   <h4>Confirm removal</h4>
+       <!--start of form -->
        <form method='POST' action='/property/remove'>
-
+           {{-- <!--cross site attack defence--> --}}
            {{ csrf_field() }}
-
+           <!--hidden input box for property name to be maintained -->
            <input type='hidden' name='id' value='{{ $properties->id }}'?>
-
-           <h2>Are you sure you want to remove this property from the database <em>{{ $properties->property_name }}</em>?</h2>
-
+           <!--Alert message to confirm if user want to remove this listing-->
+           <h4>Associated Mortgage Loan Scenarios will also be deleted and Property Features detached.<br/>
+             Are you sure you want to remove this property "<em>{{ $properties->property_name }}</em>" from the database?</h4>
+           <!--submit red button to confirm removal of feature-->
            <input type='submit' value='Confirm Remove' class='btn btn-danger'>
 
        </form>
-
 
 @endsection
 
 
 @section('error_content')
-    <!--check for validation errors, if found, display and hald calculations, code leveraged from class lecture notes -->
+    <!--blade template placeholder section, satisfies html validator requirements -->
     <h6>&nbsp;</h6>
 @endsection
 
 @section('mortcalc_content')
-    <!--conditional display once GET happens; display of inputs, calculated status, and mortgage payment -->
+    <!--blade template placeholder section, satisfies html validator requirements -->
     <h6>&nbsp;</h6>
 @endsection
 
 @section('loancost_content')
-    <!--conditional display once GET happens check box is checked; display of loan lifetime cost summary -->
+    <!--blade template placeholder section, satisfies html validator requirements -->
     <h6>&nbsp;</h6>
 @endsection
 
 @section('amorttbl_content')
-    <!--conditional display of mortgage amortization table, code stored on separate php files that has table display logic (soc)-->
+    <!--blade template placeholder section, satisfies html validator requirements -->
     <h6>&nbsp;</h6>
 @endsection

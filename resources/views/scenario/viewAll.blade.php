@@ -8,7 +8,7 @@
 @endsection
 
 @section('form_content')
-  <h4>Mortgage Payments - All Scenarios Saved in the database</h4>
+  <h2>Mortgage Loan Scenarios saved in the database</h2>
   {{-- Reference: Used outside package 'laravel tables' from gbrock -> https://github.com/gbrock/laravel-table --}}
   <table> {!! $table->render() !!} </table>
 

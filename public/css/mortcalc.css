@@ -1,3 +1,4 @@
+/* main CSS for the application*/
 body {
     padding:25px;
 }
@@ -44,4 +45,46 @@ table, th, td {
     padding-left: 5px;
     padding-right: 5px;
     width: 800px;
+}
+
+/* Leveraged Session Style Code from Class Notes.*/
+.message {
+    width:100%;
+    text-align:center;
+    padding:5px;
+    position:fixed;
+    top:0;
+    left:0;
+    background-color:yellow;
+    font-weight:bold;
+}
+
+/* Reference: Top navigation Code leveraged from w3schools.com. https://www.w3schools.com/howto/howto_js_topnav.asp*/
+/* background color to the top navigation */
+.horizontalNav {
+    background-color: #003366;
+    overflow: hidden;
+}
+
+/* Styling of the links inside the navigation bar */
+.horizontalNav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 14px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+/* the color of links upon hover */
+.horizontalNav a:hover {
+    background-color: #c0c0c0;
+    color: black;
+}
+
+/* color to the active/current link */
+.topnav a.active {
+    background-color: #4CAF50;
+    color: white;
 }

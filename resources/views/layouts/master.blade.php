@@ -16,17 +16,19 @@
 </head>
 <!--start of html body -->
   <body>
+    <!-- Code to display session message; Leveraged class notes http://dwa15.com-->
+    @if(Session::get('message') != null)
+        <div class='message' id='message'> {{ Session::get('message') }}</div>
+    @endif
 
       <header>
-
-            <nav>
-                <ul>
-                        <li><a href='/'>Mortgage Payment Calculator</a></li>
-                        <li><a href='/readme'>Readme</a></li>
-                        <li><a href='/scenario'>Mortgage Scenario Information</a></li>
-                        <li><a href='/property'>Real Estate Property Information</a></li>
-                </ul>
-            </nav>
+                <!-- Reference: Top navigation Code leveraged from w3schools.com. https://www.w3schools.com/howto/howto_js_topnav.asp -->
+                <div class='horizontalNav' id='horizontalNav'>
+                  <a href='/'>Home</a>
+                  <a href='/scenario'>Mortgage Scenario Information</a>
+                  <a href='/property'>Real Estate Property Information</a>
+                  <a href='/readme'>About</a>
+                </div>
       </header>
 
           <section>
@@ -55,6 +57,19 @@
       </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    {{-- <script type="text/javascript">
+    $(document).ready(function () {
+        $('#checkbox1').change(function () {
+            if (!this.checked)
+            //  ^
+               $('#autoUpdate').fadeIn('slow');
+            else
+                $('#autoUpdate').fadeOut('slow');
+        });
+    });
+    </script> --}}
+    {{-- http://stackoverflow.com/questions/19447591/show-hide-div-when-checkbox-selected --}}
 
     @stack('body')
 

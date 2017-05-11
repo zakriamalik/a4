@@ -73,7 +73,7 @@
 
         <!--select downdown for property name populated by database, to attach property listing to the loan scenario using laravel model and database joins -->
         <!--leveraged example from class notes http://dwa15.com -->
-        <select name='propertySelect' id='propertySelect'>
+        <select name='property' id='property'>
           <option value='0'>Choose</option>
             @foreach($properties as $properties)
             <option value='{{$properties->id}}' {{ $scenario->property_id == $properties->id ? 'Selected' : '' }}>{{$properties->property_name}}</option>
@@ -82,9 +82,7 @@
 
         <!--submit & reset buttons -->
         <input type='submit' name='submit' class='btn btn-primary btn-small' value='save'>
-        <input type='button' name='reset' class='btn btn-primary btn-small' onclick="location='./{{$id}}'" value='Reset Form'>
-        <!--Reference: Technique for reset button, got ideas from Piazza forum and this website:
-        http://www.plus2net.com/html_tutorial/button-linking.php -->
+
   </form>
 
 @endsection

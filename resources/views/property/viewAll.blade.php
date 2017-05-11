@@ -1,28 +1,34 @@
-{{-- /resources/views/readme.blade.php --}}
+{{-- /resources/views/property/viewAll.blade.php --}}
+{{-- blade view to show all real estate property listings using table joins --}}
+
 @extends('layouts.master')
 
 @section('title')
-  All Saved Proverty Listings Scenarios
+    All Saved Real Estate Property Listings Scenario
 @endsection
 
 @section('form_content')
-  <h4>Property Listings</h4>
-  <table> {!! $table->render() !!} </table>
-  <p><a href="/property">Property Landing Page</a></p>
+    <h4>Property Listings</h4>
+    <table> {!! $table->render() !!} </table>
+    <p><a href="/property">Property Landing Page</a></p>
 @endsection
 
 @section('error_content')
-  <h6>&nbsp;</h6>
+    <!--blade template placeholder section, satisfies html validator requirements -->
+    <h6>&nbsp;</h6>
 @endsection
 
 @section('mortcalc_content')
-  <h6>&nbsp;</h6>
+    <!--blade template placeholder section, satisfies html validator requirements -->
+    <h6>&nbsp;</h6>
 @endsection
 
 @section('loancost_content')
-  <h6>&nbsp;</h6>
+    <!--blade template placeholder section, satisfies html validator requirements -->
+    <h6>&nbsp;</h6>
 @endsection
 
 @section('amorttbl_content')
-  <h6>&nbsp;</h6>
+    <!--blade template placeholder section, satisfies html validator requirements -->
+    <h6>&nbsp;</h6>
 @endsection
