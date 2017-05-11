@@ -37,9 +37,9 @@
         </select><br/>
         <!--input text boxes for Property Size -->
         <label for='propertySize'>Property Size: </label>
-        Bd<input type='number' id='propertySizeBd' name='propertySizeBd' step='1' min='1' max='9' Size='5' pattern='[0-9]' value= {{ isset($_POST['propertySizeBd']) ? $_POST['propertySizeBd'] : '' }} {{old('propertySizeBd')}}>
-        Ba<input type='number' id='propertySizeBa' name='propertySizeBa' step='1' min='1' max='9' Size='5' pattern='[0-9]' value= {{ isset($_POST['propertySizeBa']) ? $_POST['propertySizeBa'] : '' }} {{old('propertySizeBa')}}>
-        Ga<input type='number' id='propertySize' name='propertySizeGa' step='1' min='0' max='9' Size='5' pattern='[0-9]' value= {{ isset($_POST['propertySizeGa']) ? $_POST['propertySizeGa'] : '' }} {{old('propertySizeGa')}}><br/>
+        Bd<input type='number' id='propertySizeBd' name='propertySizeBd' step='1' min='1' max='9' Size='5' value= {{ isset($_POST['propertySizeBd']) ? $_POST['propertySizeBd'] : '' }} {{old('propertySizeBd')}}>
+        Ba<input type='number' id='propertySizeBa' name='propertySizeBa' step='1' min='1' max='9' Size='5' value= {{ isset($_POST['propertySizeBa']) ? $_POST['propertySizeBa'] : '' }} {{old('propertySizeBa')}}>
+        Ga<input type='number' id='propertySize' name='propertySizeGa' step='1' min='0' max='9' Size='5' value= {{ isset($_POST['propertySizeGa']) ? $_POST['propertySizeGa'] : '' }} {{old('propertySizeGa')}}><br/>
         <!--input text box for Property Living Space -->
         <label for='livingArea'>Property Living Space (sqft): </label>
         <input type='text' id='livingArea' name='livingArea' value= {{ isset($_POST['livingArea']) ? $_POST['livingArea'] : '' }} {{old('livingArea')}}><br/>

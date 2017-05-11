@@ -52,7 +52,7 @@
             @foreach($properties as $properties)
             <option value='{{$properties->id}}' {{ isset($_POST['property']) && $_POST['property']==$properties->id ? 'Selected' : '' }}>{{$properties->property_name}}</option>
             @endforeach
-        </select></br>
+        </select><br/>
 
         <!--submit & reset buttons -->
         <input type='submit' name='submit' class='btn btn-primary btn-small' value='save'>

@@ -9,14 +9,14 @@
  <h2>Real Estate Property List Management</h2>
     <!--List of real estate property listings displayed for user to click select for respective CRUD database actions -->
     <ul>
-      <a href="{{ url('/property','viewAll') }}">ViewAll Saved Properties Listings</a></br>
-      <a href="{{ url('/property','view') }}">View a single Property Listing</a></br>
-      <a href="{{ url('/property','save') }}">Save a New Property Listing</a></br>
-      <a href="{{ url('/property','change') }}">Update an Existing Property Listing</a></br>
-      <a href="{{ url('/property','delete') }}">Remove an Existing Property Listing</a></br>
-      <a href="{{ url('/property','viewfeatures') }}">View Features of an Existing Property Listing</a></br>
-      <a href="{{ url('/property','increasefeatures') }}">Add Features to an Existing Property Listing</a></br>
-      <a href="{{ url('/property','decreasefeatures') }}">Remove Features from Existing Property Listing</a></br>
+      <li><a href="{{ url('/property','viewAll') }}">ViewAll Saved Properties Listings</a></li>
+      <li><a href="{{ url('/property','view') }}">View a single Property Listing</a></li>
+      <li><a href="{{ url('/property','save') }}">Save a New Property Listing</a></li>
+      <li><a href="{{ url('/property','change') }}">Update an Existing Property Listing</a></li>
+      <li><a href="{{ url('/property','delete') }}">Remove an Existing Property Listing</a></li>
+      <li><a href="{{ url('/property','viewfeatures') }}">View Features of an Existing Property Listing</a></li>
+      <li><a href="{{ url('/property','increasefeatures') }}">Add Features to an Existing Property Listing</a></li>
+      <li><a href="{{ url('/property','decreasefeatures') }}">Remove Features from Existing Property Listing</a></li>
 
     </ul>
 @endsection
