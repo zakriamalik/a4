@@ -42,10 +42,10 @@
         <label for='propertySize'>Property Size: </label>
         <input type='text' id='propertySize' name='propertySize' value= '{{$properties->property_size}}' ><br/> --}}
         <!--input text boxes for Property Size -->
-        <label for='propertySize'>Property Size: </label>
-        Bd<input type='number' id='propertySizeBd' name='propertySizeBd' step='1' min='1' max='9' Size='5' pattern='[0-9]' value= {{substr($properties->property_size,0,1)}}>
-        Ba<input type='number' id='propertySizeBa' name='propertySizeBa' step='1' min='1' max='9' Size='5' pattern='[0-9]' value= {{substr($properties->property_size,4,1)}}>
-        Ga<input type='number' id='propertySizeGa' name='propertySizeGa' step='1' min='0' max='9' Size='5' pattern='[0-9]' value= {{substr($properties->property_size,8,1)}}><br/>
+        <label>Property Size: </label>
+        Bd<input type='number' id='propertySizeBd' name='propertySizeBd' step='1' min='1' max='9' Size='5' value= '{{substr($properties->property_size,0,1)}}'>
+        Ba<input type='number' id='propertySizeBa' name='propertySizeBa' step='1' min='1' max='9' Size='5' value= '{{substr($properties->property_size,4,1)}}'>
+        Ga<input type='number' id='propertySizeGa' name='propertySizeGa' step='1' min='0' max='9' Size='5' value= '{{substr($properties->property_size,8,1)}}'><br/>
 
         <!--input text box for Property Living Space -->
         <label for='livingArea'>Property Living Space (sqft): </label>

@@ -69,7 +69,7 @@
            <label for='loanTotalCost'>Total Loan Cost ($):</label>
            <input type='number' id='loanTotalCost' name='loanTotalCost' value= '{{round($scenario->loan_total_cost,2)}}' disabled><br/>
            <!-- read only number box for total loan payments -->
-           <label for='loantotalPayments'>Total Loan Payments ($):</label>
+           <label for='loanTotalPayments'>Total Loan Payments ($):</label>
            <input type='number' id='loanTotalPayments' name='loanTotalPayments' value= '{{$scenario->loan_payments_count}}' disabled><br/>
 
 

@@ -35,7 +35,7 @@
            </ul>
 
            <!--select from the list of features to be removed from the property-->
-           <label for 'featureSelect'>Select a Feature to Remove</label></br>
+           <label for='featureSelect'>Select a Feature to Remove</label><br/>
            <select name='featureSelect' id='featureSelect'>
              <option value='0'>Choose</option>
                @foreach($featureAmend as $featureAmend)
