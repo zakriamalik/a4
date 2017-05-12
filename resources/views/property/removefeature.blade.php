@@ -41,7 +41,7 @@
                @foreach($featureAmend as $featureAmend)
                <option value='{{$featureAmend->id}}'> {{$featureAmend->feature_name}}</option>
                @endforeach
-           </select></br>
+           </select><br/>
 
            <!--submit red button to confirm removal of feature-->
            @if(count($featureAmend)>0)
