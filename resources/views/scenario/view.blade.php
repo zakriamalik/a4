@@ -130,6 +130,7 @@
 @section('error_content')
   <!--blade template placeholder section, satisfies html validator requirements -->
     <h6>&nbsp;</h6>
+
 @endsection
 
 @section('mortcalc_content')
@@ -139,7 +140,7 @@
 
 @section('loancost_content')
   <!--blade template placeholder section, satisfies html validator requirements -->
-    <h6>&nbsp;</h6>
+    <h6>&nbsp;</h6
 @endsection
 
 @section('amorttbl_content')

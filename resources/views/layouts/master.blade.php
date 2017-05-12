@@ -58,19 +58,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-    {{-- <script type="text/javascript">
-    $(document).ready(function () {
-        $('#checkbox1').change(function () {
-            if (!this.checked)
-            //  ^
-               $('#autoUpdate').fadeIn('slow');
-            else
-                $('#autoUpdate').fadeOut('slow');
-        });
-    });
-    </script> --}}
-    {{-- http://stackoverflow.com/questions/19447591/show-hide-div-when-checkbox-selected --}}
-
     @stack('body')
 
   </body>

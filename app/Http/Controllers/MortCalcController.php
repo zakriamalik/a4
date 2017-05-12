@@ -296,30 +296,13 @@ class MortCalcController extends Controller
     $propertySelect = $scenario->property_id;
     $properties = Property::where('id',$propertySelect)->get();
     $featureProperties = FeatureProperty::where('property_id',$propertySelect)->get();
-    #$feature_ids = $featureProperties->lists('property_id')->all();
-    #dump($feature_ids);
-    #$featureList = $featuresProperties->feature_id;
-    #$features = Feature::where('id',$featureList)->get();
-    #$feature_id = Mortgage::table('feature_property')->select('feature_id')->where('property_id',$propertySelect)->get();
-    #$features = Feature::where('id')
+
     $array_feature=[];
     foreach ($featureProperties as $featureProperty) {
         $array_feature[]=$featureProperty->feature_id;
     }
     $features = Feature::whereIn('id',$array_feature)->get();
     # Leveraged idea from here: http://stackoverflow.com/questions/17605693/laravel-4-eloquent-orm-select-where-array-as-parameter
-
-    #dump($features);
-    #foreach ($features as $feature) {
-    #    $featureList = $feature->feature_name;
-        #dump($featureList);
-    #}
-
-
-    #dump($array_feature);
-    #$countries = $featureProperties['feature_id']->lists('feature_id');
-    #dump($countries);
-    #$features = Feature::find($featureProperty);
 
     if(!$scenario) {
         Session::flash('message', 'Alert Message: Mortgage Loan Scenario not found in the database, cannot show/view.');
@@ -337,26 +320,10 @@ class MortCalcController extends Controller
             $monthlyPayment = $scenario->loan_monthly_payment;
             $interestTotal = $scenario->interest_total_paid;
 
-            // $propertyId = $properties->property_id;
-            // $propertyName = $properties->property_name;
-
             $interestRateAvg = $scenario->interest_rate_average;
             $loanTotalCost = $scenario->loan_total_cost;
             $loanMonths = $scenario->loan_payments_count;
 
-
-            // # Logic: Formulae & Calculations used to determine mortage payments
-            // if($interestRate>0 && $loanDuration>0 && $loan>0) {
-            //     $monthlyPayment = $loan*(($interestRate/100/12)*Pow((1+($interestRate/100/12)),$loanMonths))/(Pow((1+($interestRate/100/12)),$loanMonths)-1);
-            //     # Reference: Learned and leveraged arithematic functions used at this website: http://php.net/manual/en/language.operators.arithmetic.php
-            //     # Reference: Obatined Mortage Loan Payment formualae from this website: https://www.mtgprofessor.com/formulas.htm
-            //     # Mortage Payment Formula: P = L[c(1 + c)^n]/[(1 + c)^n - 1]
-            // 		# Where: L = Loan amount, c=monthly interest rate=Annual Interest Rate/12, P = Monthly payment, n = Month when the balance is paid in full, B = Remaining Balance
-            // 	}
-            // else {
-            //     $monthlyPayment=0;
-            //   }
-            //
             # variable declaration and calculations for the display file
             $loanTbl = $loan;
             $monthlyPaymentTbl = $monthlyPayment;
@@ -392,27 +359,12 @@ class MortCalcController extends Controller
             $array_principal[$i]=Round(($monthlyPaymentTbl-($loanTbl*$interestRateMonthlyTbl/100)),2);
             $array_loanBalance[$i]=$loanTbl=Round(($loanTbl-($monthlyPaymentTbl-($loanTbl*$interestRateMonthlyTbl/100))),2);
             $array_interestCumulative[$i]=$array_interest[$i]=Round(($loanTbl*$interestRateMonthlyTbl/100),2);
-            # loan total lifetime cost calculations within loop
-            // $interestTotal=$interestTotal+Round(($loanTbl*$interestRateMonthlyTbl/100),2);
-            // $interestRateAvg=$interestRateAvg+$interestRateMonthlyTbl;
-            // $array_date[$i] = date("M-Y", strtotime("+$i month"));
-          }
-            # loan total lifetime cost calculations after loop
-
-            // $interestRateAvg=$interestRateAvg/$loanMonths;
-            // $loanTotalCost=$interestTotal+$loan;
-            #Reference 1: Formula for Monthly interest calculations: http://homeguides.sfgate.com/calculate-principal-interest-mortgage-2409.html
-            #Reference 2: Learned and leveraged this site to understand syntax for number format function. http://php.net/manual/en/function.number-format.php
-            #Reference 3: Learned how to access array in Laravel. http://stackoverflow.com/questions/36050266/laravel-accessing-array-data-in-view
-            #Reference 4: Learned how to pass array from controller to view in Laravel. http://stackoverflow.com/questions/26251108/form-passing-array-from-controller-to-view-php-laravel
-
 
         return view('scenario.view')->with([
                  'id'=> $id,
                 'scenario' => $scenario,
                 'properties' => $properties,
                 'features' => $features,
-
                 'scenarioNumber' => $scenarioNumber,
                 'scenarioName' => $scenarioName,
                 'loanDisplay'=>number_format($loan, 2, '.', ','),
@@ -437,6 +389,7 @@ class MortCalcController extends Controller
                 'array_date'=>$array_date,
               ]);
             }
+        }
   } #end of viewScenario method
 
 
@@ -934,17 +887,6 @@ class MortCalcController extends Controller
       # pass array to the model data for filtering
       $featureSelected = Feature::whereIn('id',$array_feature)->get();
 
-      //$property = Property::where('id',$id)->first();
-      //foreach($property->features as $feature) {
-          //
-          //dump($feature);
-          //}
-     //$featuresForCheckboxes = Feature::getFeaturesForCheckboxes();
-
-      // if(is_null($scenariosSearch)) {
-      //     Session::flash('message', 'Scenario not found.');
-      //     return redirect('scenario/viewAll');
-      // }
       # return view with filtered model data and record id
       return view('property.viewfeatures')->with([
           'id'=> $id,
