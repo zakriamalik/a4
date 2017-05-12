@@ -38,9 +38,6 @@
           <option value='Condo' {{ isset($_POST['propertyType']) && $_POST['propertyType']=='Condo' ? 'Selected' : '' }} {{$properties->property_type=='Condo' ? 'Selected' : ''}} > Condo</option>
         </select><br/>
 
-        {{-- <!--input text box for Property Size -->
-        <label for='propertySize'>Property Size: </label>
-        <input type='text' id='propertySize' name='propertySize' value= '{{$properties->property_size}}' ><br/> --}}
         <!--input text boxes for Property Size -->
         <label>Property Size: </label>
         Bd<input type='number' id='propertySizeBd' name='propertySizeBd' step='1' min='1' max='9' Size='5' value= '{{substr($properties->property_size,0,1)}}'>

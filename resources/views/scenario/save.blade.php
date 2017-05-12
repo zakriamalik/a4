@@ -53,6 +53,10 @@
             <option value='{{$properties->id}}' {{ isset($_POST['property']) && $_POST['property']==$properties->id ? 'Selected' : '' }}>{{$properties->property_name}}</option>
             @endforeach
         </select><br/>
+        <!--Reference: Techniques leveraged to populate select dropdown option from the database:
+        https://laracasts.com/discuss/channels/laravel/fetch-dropdown-list-from-database-in-l-52?page=1 -->
+        <!--Reference: Techniques leveraged to populate select dropdown option from the database:
+        http://stackoverflow.com/questions/35421804/laravel-5-2-populate-select-options-from-database -->
 
         <!--submit & reset buttons -->
         <input type='submit' name='submit' class='btn btn-primary btn-small' value='save'>

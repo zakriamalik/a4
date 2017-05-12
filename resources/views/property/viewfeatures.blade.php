@@ -33,61 +33,6 @@
         {{-- Reference: Leveraged class lecture notes for extracting info using pivot table -> https://github.com/susanBuck/foobooks/blob/master/resources/views/books/edit.blade.php --}}
         {{-- Reference: Leveraged stackoverflow for using @forelse loop -> http://stackoverflow.com/questions/32652818/laravel-blade-check-empty-foreach --}}
 
-
-        {{-- <label>Features</label>
-          <ul id='features'>
-              @foreach($features as $features)
-                  <li><input
-                      type='checkbox'
-                      value='{{ $features->id }}'
-                      id='feature_{{ $features->id }}'
-                      name='features[]'
-                      {{ $property->feature_name ?  'CHECKED' : '' }}
-                  >&nbsp;
-                  <label for='feature_{{ $features->id }}'>{{ $features->feature_name }}</label></li>
-              @endforeach --}}
-
-{{-- {{ (in_array($name, $tagsForThisBook)) ? 'CHECKED' : '' }} --}}
-
-
-              {{-- <label>Key Features</label>
-              <ul id='features2'>
-                  @foreach($features as $features)
-                      <li>{{ $features->id }}, {{ $features->feature_number }}, {{ $features->feature_name }} </li>
-                  @endforeach
-              </ul> --}}
-
-              {{-- <label>Key Features</label>
-              <ul id='features3'>
-                  @foreach($featureSelected as $featureSelected)
-                      <li>{{ $featureSelected->id }},
-                        {{ $featureSelected->feature_name }},
-                       </li>
-                  @endforeach
-              </ul> --}}
-
-              {{-- <select name='featureSelect' id='featureSelect'>
-                <option value='0'>Choose</option>
-                  @foreach($features as $features)
-                  <option value='{{$features->id}}'> {{$features->feature_name}}</option>
-                  @endforeach
-              </select></br> --}}
-              {{-- {{ $scenario->property_id == $properties->id ? 'Selected' : '' }} --}}
-
-              {{-- <label>Features</label>
-                <ul id='features'>
-                    @foreach($features as $features)
-                        <li><input
-                            type='checkbox'
-                            value='{{ $features->id }}'
-                            id='feature_{{ $features->id }}'
-                            name='features[]'
-                            {{ $features->id }}
-                            {{ $features->id == $propertyfeatures->feature_id ?  'CHECKED' : '' }}
-                        >&nbsp;
-                        <label for='feature_{{ $features->id }}'>{{ $features->feature_name }}</label></li>
-                    @endforeach --}}
-
   </form>
 
 @endsection

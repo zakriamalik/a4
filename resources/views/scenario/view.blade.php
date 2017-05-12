@@ -122,12 +122,6 @@
         {{-- Reference: Leveraged class lecture notes for extracting info using pivot table -> https://github.com/susanBuck/foobooks/blob/master/resources/views/books/edit.blade.php --}}
         {{-- Reference: Leveraged stackoverflow for using @forelse loop -> http://stackoverflow.com/questions/32652818/laravel-blade-check-empty-foreach --}}
 
-        {{-- <!--checkbox to show or hide loan cost and amortization table -->
-        <label><input type='checkbox' name='show_table' value='show_table' onclick='return check()' {{ isset($_GET['show_table']) ? 'checked' : ''}} {{old('show_table') ? 'checked' : ''}}> Display Amortization Table</label><br/>
-        <!--Reference: Technique used based on method used on this website:
-        http://stackoverflow.com/questions/12541419/php-keep-checkbox-checked-after-submitting-form--> --}}
-
-
   </form>
 
 @endsection
@@ -151,13 +145,4 @@
 @section('amorttbl_content')
   <!--blade template placeholder section, satisfies html validator requirements -->
     <h6>&nbsp;</h6>
-
-            {{-- Add another director <input type="checkbox" id="checkbox1"/> --}}
-            {{-- <div id="autoUpdate" class="autoUpdate">
-                <hr>
-                  <div>
-                    <h3>Mortgage Amortization Schedule</h3>
-                    @include('amortTbl');
-                  </div>
-            </div> --}}
 @endsection
