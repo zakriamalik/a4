@@ -15,18 +15,18 @@
         {{ csrf_field() }}
         <!--text input box for loan scenario number -->
         <label for='scenarioNumber'>Loan Scenario Number:</label>
-        <input type='number' id='scenarioNumber' step='1' min='1' name='scenarioNumber' value= {{ isset($_POST['scenarioNumber']) ? $_POST['scenarioNumber'] : '' }} {{old('scenarioNumber')}}><br/>
+        <input type='number' id='scenarioNumber' step='1' min='1' name='scenarioNumber' value= '{{ isset($_POST['scenarioNumber']) ? $_POST['scenarioNumber'] : '' }}' {{old('scenarioNumber')}}><br/>
         <!--text input box for loan scenario name -->
         <label for='scenarioName'>Loan Scenario Name:</label>
-        <input type='text' id='scenarioName' name='scenarioName' value= {{ isset($_POST['scenarioName']) ? $_POST['scenarioName'] : '' }} {{old('scenarioName')}}><br/>
+        <input type='text' id='scenarioName' name='scenarioName' value= '{{ isset($_POST['scenarioName']) ? $_POST['scenarioName'] : '' }}' {{old('scenarioName')}}><br/>
         <!--text input box for loan amount entry -->
         <label for='loan'>Loan Amount:</label>
-        <input type='number' id='loan' step='0.01' min='1' name='loan' value= {{ isset($_POST['loan']) ? $_POST['loan'] : '' }} {{old('loan')}}><br/>
+        <input type='number' id='loan' step='0.01' min='1' name='loan' value= '{{ isset($_POST['loan']) ? $_POST['loan'] : '' }}' {{old('loan')}}><br/>
         <!--Reference: Information leveraged to retain data in textboxes
          https://laracasts.com/discuss/channels/laravel/input-data-not-remaining-after-refresh-using-old?page=1-->
         <!--text input box for interest rate entry -->
         <label for='interestRate'>Interest Rate:</label>
-        <input type='number' id='interestRate' step='0.001' min='1.01' name='interestRate' value= {{ isset($_POST['interestRate']) ? $_POST['interestRate'] : '' }} {{old('interestRate')}}><br/>
+        <input type='number' id='interestRate' step='0.001' min='1.01' name='interestRate' value= '{{ isset($_POST['interestRate']) ? $_POST['interestRate'] : '' }}' {{old('interestRate')}}><br/>
         <!--option radio buttons for type of interest rate -->
         <b>Interest Type:</b>
         <label><input type='radio' name='interestType' value='fixed' {{ isset($_POST['interestType']) && $_POST['interestType']=='fixed' ? 'checked' : '' }} {{old('interestType')=='fixed' ? 'checked' : ''}}> Fixed</label>

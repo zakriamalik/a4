@@ -9,8 +9,7 @@
 
 @section('form_content')
     <h4>Property Listings</h4>
-    <table> {!! $table->render() !!} </table>
-    <p><a href="/property">Property Landing Page</a></p>
+    {!! $table->render() !!}
 @endsection
 
 @section('error_content')

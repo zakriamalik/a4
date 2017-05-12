@@ -13,7 +13,7 @@
   <form method='GET' id='formSearch' action='/scenario/search'>
       <!-- text input for searching loan scenario name-->
       <label for='searchText'>Search by Scenario*:</label>
-      <input type='text' id='searchText' name='searchText' required pattern='[a-zA-Z0-9]+' value= {{ isset($_GET['searchText']) ? $_GET['searchText'] : '' }} {{ old('searchText')}} ><br/>
+      <input type='text' id='searchText' name='searchText' required pattern='[a-zA-Z0-9]+' value= '{{ isset($_GET['searchText']) ? $_GET['searchText'] : '' }}' {{ old('searchText')}} ><br/>
       <!-- Reference for text input patter validation http://stackoverflow.com/questions/19619428/html5-form-validation-pattern-alphanumeric-with-spaces-->
       <!-- similar word search based upon above technique-->
       <label>Similar Word Search</label>

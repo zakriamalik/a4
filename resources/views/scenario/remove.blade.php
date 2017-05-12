@@ -16,7 +16,7 @@
             <!--CSRF protection code -->
            {{ csrf_field() }}
             <!--hidden input number field to track the scenario -->
-           <input type='hidden' name='id' value='{{ $scenario->id }}'?>
+           <input type='hidden' name='id' value='{{ $scenario->id }}'>
            <!--number input box for loan scenario number maintained by the user-->
            <label for='scenarioNumber'>Loan Scenario Number:</label>
            <input type='number' id='scenarioNumber' name='scenarioNumber' value= '{{$scenario->scenario_number}}' disabled><br/>

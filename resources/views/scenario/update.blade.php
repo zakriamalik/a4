@@ -68,7 +68,7 @@
         <label for='loanTotalCost'>Total Interest Paid:</label>
         <input type='number' id='loanTotalCost' name='loanTotalCost' value= '{{$scenario->loan_total_cost}}' disabled><br/>
         <!--number read only box for total loan payments -->
-        <label for='loantotalPayments'>Total Interest Paid:</label>
+        <label for='loanTotalPayments'>Total Interest Paid:</label>
         <input type='number' id='loanTotalPayments' name='loanTotalPayments' value= '{{$scenario->loan_payments_count}}' disabled><br/>
 
         <!--select downdown for property name populated by database, to attach property listing to the loan scenario using laravel model and database joins -->
@@ -78,7 +78,7 @@
             @foreach($properties as $properties)
             <option value='{{$properties->id}}' {{ $scenario->property_id == $properties->id ? 'Selected' : '' }}>{{$properties->property_name}}</option>
             @endforeach
-        </select></br>
+        </select><br/>
 
         <!--submit & reset buttons -->
         <input type='submit' name='submit' class='btn btn-primary btn-small' value='save'>

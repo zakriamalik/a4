@@ -289,23 +289,7 @@ class MortCalcController extends Controller
 
   } #end of viewAllScenario Method
 
-    //
-    // public function selectScenario($id) {
-    //     $scenario = Scenario::find($id);
-    //     $properties = Property::All();
-    //     // if(is_null($scenariosSearch)) {
-    //     //     Session::flash('message', 'Scenario not found.');
-    //     //     return redirect('scenario/viewAll');
-    //     // }
-    //     return view('scenario.update')->with([
-    //         'id'=> $id,
-    //        'scenario' => $scenario,
-    //        'properties' => $properties,
-    //     ]);
-    //   //  return redirect('/scenario/update/'.$id);
-    // }
-
-    public function viewScenario($id) {
+  public function viewScenario($id) {
 
     # First get a scenario to view
     $scenario = Scenario::find($id);
@@ -459,9 +443,9 @@ class MortCalcController extends Controller
   public function searchScenario(Request $request) {
          # Leveraged lecture example to create this method
          # access the request using this and apply laravel validation rules on inputs
-         $this->validate($request,[
-           'searchText' => 'required|alpha_num',
-         ]);
+        //  $this->validate($request,[
+        //    'searchText' => 'required|alpha_num'
+        //  ]);
         # Store the searchText in a variable and initialize count variable
         $searchText = $request->input('searchText', null);
         $resultCount='';
@@ -487,11 +471,10 @@ class MortCalcController extends Controller
                  'resultCount' => $resultCount
              ]);
 
-        }
-        else {
+      }
+      else {
           return view('scenario.search');
-        }
-
+      }
 
   } #end of searchScenario method
 
@@ -1073,8 +1056,5 @@ class MortCalcController extends Controller
     # return back to the removal form
     return redirect('/property/removefeature/'.$request->id);
   } #end of deleteFeature method
-
-
-
 
 }
