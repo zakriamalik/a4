@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use Gbrock\Table\Facades\Table; # Refernce: Used Table from gbrock git lib https://github.com/gbrock/laravel-table
@@ -458,65 +456,34 @@ class MortCalcController extends Controller
   } #end of viewScenario method
 
 
-    public function searchScenario(Request $request) {
-        # leveraged class notes dwa15.com
-        // #access the request using this and apply laravel validation rules on inputs
-        // $this->validate($request,[
-        //   'searchText' => 'required|alpha_num',
-        // ]);
-
-        # Start with an empty array of search results; scenarios that matches search query and populates array
-        $searchResults = [];
-        $resultCount='';
-        # Store the searchText in a variable for easy access
+  public function searchScenario(Request $request) {
+         # Leveraged lecture example to create this method
+         # access the request using this and apply laravel validation rules on inputs
+         $this->validate($request,[
+           'searchText' => 'required|alpha_num',
+         ]);
+        # Store the searchText in a variable and initialize count variable
         $searchText = $request->input('searchText', null);
+        $resultCount='';
         # Only try and search *if* there's a searchTerm
         if($searchText) {
-            # Leveraged lecture example to create this method
-            #$scenario = new Scenario();
-            $scenario = Scenario::All();
-
+            # if search term exists
             if($request->has('similarSearch')) {
-                $scenarios = $scenario->where('scenario_name', 'Like', '%'.$searchText.'%');
-                $resultCount = $scenario->where('scenario_name', 'Like', '%'.$searchText.'%')->count();
-                #http://stackoverflow.com/questions/30761950/laravel-5-like-equivalent-eloquent
-                #dump($scenarios);
-                #dump($resultCount);
+                # search by wild card search
+                $scenarios = Scenario::where('scenario_name', 'LIKE', '%'.$searchText.'%')->get();
+                $resultCount = Scenario::where('scenario_name', 'LIKE', '%'.$searchText.'%')->get()->count();
+                # Reference: Technique used for wild card search. http://stackoverflow.com/questions/30761950/laravel-5-like-equivalent-eloquent
             }
             else {
-                $scenarios = $scenario->where('scenario_name', 'like', $searchText);
-                $resultCount = $scenario->where('scenario_name', 'like', $searchText)->count();
-                #dump($scenarios);
-                #dump($resultCount);
+                # search by equal text compare
+                $scenarios = Scenario::where('scenario_name', 'LIKE', $searchText)->get();
+                $resultCount = Scenario::where('scenario_name', 'LIKE', $searchText)->get()->count();
             }
-
-            # foreach loop for case senstive search
-            foreach($scenarios as $scenario_name => $scenario) {
-                # Case sensitive boolean check for a match
-                if($request->has('caseSensitive')) {
-                    $match = $scenario['scenario_name'] == $searchText;
-                }
-                # Case insensitive boolean check for a match
-                else {
-                    $match = strtolower($scenario['scenario_name']) == strtolower($searchText);
-                } #end of nested if
-                # If it was a match, add it to the results
-                if($match) {
-                    $searchResults[] = $scenario['scenario_name'];
-                }
-                else {
-                # do nothing
-                } #end of nested if
-
-            }
-
             # gbrock laravel table package, populate table with searched array
             $table = Table::create($scenarios);
             # Return view with searched scenario in a table along with relavent info
             return view('scenario.search', ['table' => $table])->with([
                  'searchText' => $searchText,
-                 'caseSensitive' => $request->has('caseSensitive'),
-                 'searchResults' => $searchResults,
                  'resultCount' => $resultCount
              ]);
 
@@ -526,10 +493,10 @@ class MortCalcController extends Controller
         }
 
 
-    } #end of searchScenario method
+  } #end of searchScenario method
 
 
-    public function loadScenario() {
+  public function loadScenario() {
         $scenario = Scenario::All();
 
         $id = $scenario->pluck('id');
@@ -538,10 +505,10 @@ class MortCalcController extends Controller
             'scenario' => $scenario
         ]);
 
-    } #end of loadScenario method
+  } #end of loadScenario method
 
 
-    public function selectScenario($id) {
+  public function selectScenario($id) {
         $scenario = Scenario::find($id);
         $properties = Property::All();
          if(!$scenario) {
@@ -553,9 +520,9 @@ class MortCalcController extends Controller
            'scenario' => $scenario,
            'properties' => $properties,
         ]);
-    } #end of selectScenario method
+  } #end of selectScenario method
 
-    public function updateScenario(Request $request) {
+  public function updateScenario(Request $request) {
 
     # Find a scenario to update from database and load into the model.
     $scenario = Scenario::find($request->id);
