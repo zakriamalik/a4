@@ -17,6 +17,13 @@
   There are key features made available to attach and detach with the property using the pivot join table. <br/>
   As far as the Mortgage Calculator is concerned, option is provided to find the statistics for the life of the loan such as cost of loan, avg rate, etc.<br/>
   Another feature provided is the Mortgage Amortization Schedule. This is a table that helps determines the loan payment schedule with visibility into the components of mortgage payment (interest and principal) and a burn-down table from start of initial loan amount down to zero loan amount. The table includes a month field that helps identify the month of the payment. The underlying assumption is that the first payment occurs in next month.<br/>
+  Distinctive features of this application are:<br/>
+  1) Availability of a calculator to perform various on the fly calculations before saving<br/>
+  2) Ability to see the amortaization schedule<br/>
+  3) Ability to load up a scenario and apply it to another prorperty<br/>
+  4) Ability to view a single scenario, along with the attached property with relavent information and on the fly calculations of additional status like down payment, closing cost, etc<br/>
+  5) Ability to add and remove features from a property<br/>
+  6) Ability to update a scenario, recalculate the statistics, and save them back to the database<br/>
   Calculator Specifications and Use Guidance:<br/>
   1) The Loan amount is a numerical entry with a range set from $1 to $100 million<br/>
   2) The interest rate is also a numerical entry with a range from 1% to 25%, fractions up to three decimal spaces are accepted<br/>

@@ -293,21 +293,25 @@ class MortCalcController extends Controller
 
     # First get a scenario to view
     $scenario = Scenario::find($id);
-    $propertySelect = $scenario->property_id;
-    $properties = Property::where('id',$propertySelect)->get();
-    $featureProperties = FeatureProperty::where('property_id',$propertySelect)->get();
-
-    $array_feature=[];
-    foreach ($featureProperties as $featureProperty) {
-        $array_feature[]=$featureProperty->feature_id;
-    }
-    $features = Feature::whereIn('id',$array_feature)->get();
-    # Leveraged idea from here: http://stackoverflow.com/questions/17605693/laravel-4-eloquent-orm-select-where-array-as-parameter
-
+    # If scenatio does not exist in the database, redirect to view all
     if(!$scenario) {
-        Session::flash('message', 'Alert Message: Mortgage Loan Scenario not found in the database, cannot show/view.');
+        dump('Alert Message: Mortgage Loan Scenario not found in the database, cannot show/view.');
+        return redirect('scenario/view');
     }
     else {
+
+      $propertySelect = $scenario->property_id;
+      $properties = Property::where('id',$propertySelect)->get();
+      $property = $properties->whereIn('id',$propertySelect);
+      $featureProperties = FeatureProperty::where('property_id',$propertySelect)->get();
+      # Declare features of array and use it in filtering the query
+      $array_feature=[];
+      foreach ($featureProperties as $featureProperty) {
+          $array_feature[]=$featureProperty->feature_id;
+      }
+      $features = Feature::whereIn('id',$array_feature)->get();
+      # Leveraged idea from here: http://stackoverflow.com/questions/17605693/laravel-4-eloquent-orm-select-where-array-as-parameter
+
             # get data from the saved scenario and format/calculate for display
             $scenarioNumber = $scenario->scenario_number;
             $scenarioName = $scenario->scenario_name;
@@ -359,6 +363,18 @@ class MortCalcController extends Controller
             $array_principal[$i]=Round(($monthlyPaymentTbl-($loanTbl*$interestRateMonthlyTbl/100)),2);
             $array_loanBalance[$i]=$loanTbl=Round(($loanTbl-($monthlyPaymentTbl-($loanTbl*$interestRateMonthlyTbl/100))),2);
             $array_interestCumulative[$i]=$array_interest[$i]=Round(($loanTbl*$interestRateMonthlyTbl/100),2);
+            $array_date[$i] = date("M-Y", strtotime("+$i month"));
+            }
+            $salePrice = $property[0]->sale_price;
+            $downPayment = $salePrice - $loan;
+
+            if($downPayment>0) {
+               $downPayment =  round($downPayment,2);
+             }
+            else {
+               $downPayment = 0;
+            }
+            $estimatedClosingCost = Round($loan * 0.02,2);
 
         return view('scenario.view')->with([
                  'id'=> $id,
@@ -387,8 +403,10 @@ class MortCalcController extends Controller
                 'interestRateAvg'=>Round($interestRateAvg, 3),
                 'loanTotalCost'=>number_format($loanTotalCost, 2, '.', ','),
                 'array_date'=>$array_date,
+                'downPayment' => $downPayment,
+                'estimatedClosingCost' => $estimatedClosingCost,
               ]);
-            }
+
         }
   } #end of viewScenario method
 
@@ -448,8 +466,8 @@ class MortCalcController extends Controller
         $scenario = Scenario::find($id);
         $properties = Property::All();
          if(!$scenario) {
-             Session::flash('message', 'Alert Message: Mortgage Loan Scenario not found in the database.');
-             return redirect('scenario/viewAll');
+             dump('Alert Message: Mortgage Loan Scenario not found in the database.');
+             return redirect('scenario/change');
          }
         return view('scenario.update')->with([
             'id'=> $id,
@@ -465,7 +483,8 @@ class MortCalcController extends Controller
     $properties = Property::all();
 
     if(!$scenario) {
-        Session::flash('message', 'Alert Message: Mortgage Loan Scenario not found in the database, cannot update.');
+        dump('Alert Message: Mortgage Loan Scenario not found in the database.');
+        return redirect('scenario/change');
     }
     else {
 
@@ -583,10 +602,10 @@ class MortCalcController extends Controller
       # Get the scenario they're attempting to delete
       $scenario = Scenario::find($id);
       if(!$scenario) {
-          Session::flash('message', 'Alert Message: Mortgage Scenario not found in the database.');
-          return redirect('/Scenario/viewAll');
+          dump('Alert Message: Mortgage Loan Scenario not found in the database.');
+          return redirect('scenario/delete');
       }
-      return view('scenario.remove')->with('scenario', $scenario);
+          return view('scenario.remove')->with('scenario', $scenario);
   } #end of stageRemoval method
 
   public function removeScenario(Request $request) {
@@ -595,7 +614,8 @@ class MortCalcController extends Controller
       $scenario = Scenario::find($request->id);
       # if scenario is not found, error messsage, else confirm removal
       if(!$scenario) {
-          Session::flash('message', 'Alert Message: Mortgage Loan Scenario not found in the database.');
+          dump('Alert Message: Mortgage Loan Scenario not found in the database');
+          return redirect('scenario/delete');
       }
       else {
           $scenario->delete();
@@ -652,7 +672,8 @@ class MortCalcController extends Controller
       # Reference: Leveraged idea from here: http://stackoverflow.com/questions/17605693/laravel-4-eloquent-orm-select-where-array-as-parameter
       # if properties not found, alert message
       if(!$properties) {
-          Session::flash('message', 'Alert Message: Property Listing not found in the database, cannot show/view.');
+          dump('Alert Message: Property Listing not found in the database, cannot show/view.');
+          return redirect('property/view');
       }
       else {
       # return view with properties and features data from the models
@@ -743,16 +764,16 @@ class MortCalcController extends Controller
       $properties = Property::find($id);
       $features = Feature::All();
 
-      // if(is_null($scenariosSearch)) {
-      //     Session::flash('message', 'Scenario not found.');
-      //     return redirect('scenario/viewAll');
-      // }
+      if(!$properties) {
+        dump('Alert Message: The real estate property information not found in the database.');
+        return redirect('property/change');
+      }
       # return view with data from properties and features models
-      return view('property.update')->with([
-          'id'=> $id,
-         'features' => $features,
-         'properties' => $properties,
-      ]);
+        return view('property.update')->with([
+            'id'=> $id,
+           'features' => $features,
+           'properties' => $properties,
+        ]);
 
   } #end of selectProperty method
 
@@ -763,7 +784,8 @@ class MortCalcController extends Controller
         # condtional if property is not found
         if(!$properties) {
             # alert message using session
-            Session::flash('message', 'Alert Message: The real estate property information not found in the database.');
+            dump('Alert Message: The real estate property information not found in the database.');
+            return redirect('property/change');
         }
         else {
               #access the request using this and apply laravel validation rules on inputs
@@ -826,10 +848,9 @@ class MortCalcController extends Controller
       $properties = Property::where('id', $id)->first();
       # condition if for Property being in the database
       if(!$properties) {
-          # alert session message
-          Session::flash('message', 'Property not found.');
-          # reurn redirect
-      return redirect('/property/viewAll');
+          # alert session message and reurn redirect
+          dump('Alert Message: The real estate property information not found in the database.');
+          return redirect('property/delete');
       }
       # return view with properties
       return view('property.remove')->with(
@@ -846,7 +867,8 @@ class MortCalcController extends Controller
       # condition if the property does not exist
       if(!$properties) {
           # alert session message
-          Session::flash('message', 'Alert Message: The real estate property information not found in the database.');
+          dump('Alert Message: The real estate property information not found in the database.');
+          return redirect('property/delete');
       }
       else {
           # delete rows from all three table in specific order to address database key constraints

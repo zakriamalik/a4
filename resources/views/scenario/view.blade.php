@@ -106,10 +106,6 @@
         <!-- read only number box for Property Yearly HOA -->
         <label for='hoaYearly'>Property Yearly HOA ($): </label>
         <input type='number' id='hoaYearly' name='hoaYearly' value= '{{round($properties->hoa_yearly,2)}}' disabled><br/>
-        <!-- read only number box to show Estimated Down Payment -->
-        <label for='estDownPmt'>Estimated Down Payment ($): </label>
-        <input type='number' id='estDownPmt' name='estDownPmt' value= '{{$properties->sale_price-$scenario->loan_amount>0 ? round($properties->sale_price,2) - round($scenario->loan_amount,2) : 0}}' disabled><br/>
-
         <!-- feature ul list using forelse loop to extract property features using pivot table -->
         <label>Key Features</label>
         <ul id='features'>
@@ -122,6 +118,45 @@
         {{-- Reference: Leveraged class lecture notes for extracting info using pivot table -> https://github.com/susanBuck/foobooks/blob/master/resources/views/books/edit.blade.php --}}
         {{-- Reference: Leveraged stackoverflow for using @forelse loop -> http://stackoverflow.com/questions/32652818/laravel-blade-check-empty-foreach --}}
 
+        <!-- checkbox to show and hide additional mortgage loan information using Java script -->
+        <label for='addMortInfo'>Show Additional Mortgage Information </label>
+        <input type='checkbox' name='addMortInfo' id='addMortInfo'/><br/>
+        <!-- checkbox to show and hide mortgage amortaization schedule information using Java script -->
+        <label for='addMortAmort'>Show Mortgage Amortization Schedule </label>
+        <input type='checkbox' name='addMortAmort' id='addMortAmort'/><br/>
+        <!-- checkbox to show and hide mortgage chart using Java script -->
+        <label for='addMortChart'>Show Mortgage Scenario Charts:   Loan Balance </label>
+        <input type='checkbox' name='addMortChart' id='addMortChart'/>
+        <!-- checkbox to show and hide mortgage chart using Java script -->
+        <label for='addMortChart2'> Monthly Interest </label>
+        <input type='checkbox' name='addMortChart2' id='addMortChart2'/>
+        <!-- checkbox to show and hide mortgage chart using Java script -->
+        <label for='addMortChart3'> Monthly Principal </label>
+        <input type='checkbox' name='addMortChart3' id='addMortChart3'/><br/>
+
+        <!-- div class to show and hide mortgage amortaization schedule information using Java script -->
+        <div id="autoUpdate1" class="autoUpdate1">
+          <div>
+            <hr>
+            <h3>Additional Mortgage Scenario Information</h3>
+            Estimated Down Payment: ${{$downPayment}}<br/>
+            Estimated Closing Cost: ${{$estimatedClosingCost}}<br/>
+            From: {{$array_date[1]}} to {{$array_date[$loanMonths]}}
+          </div>
+        </div>
+        <!-- div class to show and hide mortgage amortaization schedule information using Java script -->
+        <div id="autoUpdate2" class="autoUpdate2">
+            <hr>
+              <div>
+                <h3>Mortgage Amortization Schedule</h3>
+                @include('../amortTbl');
+              </div>
+        </div>
+
+        <!-- Reference: Java script for click to show additional features levereged from this site.
+        http://stackoverflow.com/questions/19447591/show-hide-div-when-checkbox-selected -->
+
+
   </form>
 
 @endsection
@@ -130,7 +165,7 @@
 @section('error_content')
   <!--blade template placeholder section, satisfies html validator requirements -->
     <h6>&nbsp;</h6>
-
+    @include('../chart');
 @endsection
 
 @section('mortcalc_content')
@@ -140,10 +175,10 @@
 
 @section('loancost_content')
   <!--blade template placeholder section, satisfies html validator requirements -->
-    <h6>&nbsp;</h6
+    <h6>&nbsp;</h6>
 @endsection
 
 @section('amorttbl_content')
-  <!--blade template placeholder section, satisfies html validator requirements -->
+  {{-- <!--blade template placeholder section, satisfies html validator requirements --> --}}
     <h6>&nbsp;</h6>
 @endsection
