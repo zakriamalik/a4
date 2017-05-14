@@ -104,6 +104,7 @@
           Total Loan Cost: ${{$loanTotalCost}} <br/>
           Number Payments : {{$loanMonths}} <br/>
           Property Id: {{$property}} <br/>
+          Property Name: {{$propertyName}} <br/>
 
         </div>
     @endif

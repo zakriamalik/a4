@@ -10,9 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 # main app route for home page
 Route::get('/', 'MortCalcController@index');
+# main app route for home page
+Route::get('/calc', 'MortCalcController@calculator');
 # get route for mortgage payment calculator
 Route::get('/process', 'MortCalcController@process');
 # get route for readme file

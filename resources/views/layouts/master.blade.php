@@ -85,6 +85,7 @@
                 <!-- Reference: Top navigation Code leveraged from w3schools.com. https://www.w3schools.com/howto/howto_js_topnav.asp -->
                 <div class='horizontalNav' id='horizontalNav'>
                   <a href='/'>Home</a>
+                  <a href='/calc'>Mortgage Payment calculator</a>
                   <a href='/scenario'>Mortgage Scenario Information</a>
                   <a href='/property'>Real Estate Property Information</a>
                   <a href='/readme'>About</a>

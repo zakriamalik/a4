@@ -23,6 +23,11 @@ class MortCalcController extends Controller
         return view('readme');
   } #end of readme Method
 
+  public function calculator() {
+        return view('calc');
+  } #end of calculator Method
+
+
   # request processing function with validaiton and logic code
   public function process (Request $request) {
 
@@ -103,7 +108,7 @@ class MortCalcController extends Controller
         #Reference 4: Learned how to pass array from controller to view in Laravel. http://stackoverflow.com/questions/26251108/form-passing-array-from-controller-to-view-php-laravel
 
     # return of values back to the view
-    return view('index')->with([
+    return view('calc')->with([
         'loanDisplay'=>number_format($loan, 2, '.', ','),
         'interestRateDisplay'=>$interestRate,
         'interestRateMonthlyDisplay'=>Round($interestRateMonthly,3),
@@ -247,6 +252,9 @@ class MortCalcController extends Controller
         $scenario->loan_payments_count = $loanMonths;
         $scenario->property_id = $propertyId;
 
+        $property = $properties->where('id',$propertyId)->first();
+        $propertyName = $property->property_name;
+
         $scenario->save();
         Session::flash('message', 'Confirmation Message: The mortgage loan scenario '.$request->scenarioName.' was saved in the database.');
 
@@ -275,6 +283,7 @@ class MortCalcController extends Controller
         'loanTotalCost'=>number_format($loanTotalCost, 2, '.', ','),
         'array_date'=>$array_date,
         'property' => $propertyId,
+        'propertyName' => $propertyName,
         'properties' => $properties,
       ]);
   } #end of saveScenario Method
@@ -414,14 +423,15 @@ class MortCalcController extends Controller
   public function searchScenario(Request $request) {
          # Leveraged lecture example to create this method
          # access the request using this and apply laravel validation rules on inputs
-        //  $this->validate($request,[
-        //    'searchText' => 'required|alpha_num'
-        //  ]);
+
         # Store the searchText in a variable and initialize count variable
         $searchText = $request->input('searchText', null);
         $resultCount='';
         # Only try and search *if* there's a searchTerm
         if($searchText) {
+            $this->validate($request,[
+              'searchText' => 'required|alpha_num'
+            ]);
             # if search term exists
             if($request->has('similarSearch')) {
                 # search by wild card search
