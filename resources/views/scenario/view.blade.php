@@ -9,6 +9,7 @@
 
 @section('form_content')
   <h2>View a Mortgage Scenario Information saved in the Database</h2>
+    <p>Please scroll to the bottom to for additional features</p>
         <!--start of form using GET method -->
     <Form method='GET' action='/scenario/view' id='formView'>
         <h3> Loan Scenario Information </h3>
@@ -125,7 +126,7 @@
         <label for='addMortAmort'>Show Mortgage Amortization Schedule </label>
         <input type='checkbox' name='addMortAmort' id='addMortAmort'/><br/>
         <!-- checkbox to show and hide mortgage chart using Java script -->
-        <label for='addMortChart'>Show Mortgage Scenario Charts:   Loan Balance </label>
+        <label for='addMortChart'>Show Mortgage Scenario Charts: (click one checkbox at a time only)<br/>Loan Balance </label>
         <input type='checkbox' name='addMortChart' id='addMortChart'/>
         <!-- checkbox to show and hide mortgage chart using Java script -->
         <label for='addMortChart2'> Monthly Interest </label>

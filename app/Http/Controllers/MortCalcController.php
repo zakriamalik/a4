@@ -725,7 +725,7 @@ class MortCalcController extends Controller
           'yearBuilt' => 'required|numeric|min:1000|max:2017',
           'salePrice' => 'required|numeric|min:1|max:100000000',
           'taxRate' => 'required|numeric|min:0|max:10',
-          'hoaYearly' => 'required|numeric|min:1|max:10000'
+          'hoaYearly' => 'required|numeric|min:0|max:10000'
         ]);
 
         # get loan data from the form using request and format/calculate for display

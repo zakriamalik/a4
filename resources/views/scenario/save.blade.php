@@ -21,19 +21,19 @@
         <!--text input box for loan scenario name -->
         <label for='scenarioName'>Loan Scenario Name:*</label>
         <input type='text' id='scenarioName' name='scenarioName'
-        title="User friendly name for Scenario, max characters 190"
+        title='User friendly name for Scenario, max characters 190'
         value= '{{ isset($_POST['scenarioName']) ? $_POST['scenarioName'] : '' }}' {{old('scenarioName')}}><br/>
         <!--text input box for loan amount entry -->
         <label for='loan'>Loan Amount:*</label>
         <input type='number' id='loan' step='0.01' min='1' name='loan'
-        title="Max loan amount=$100000000"
+        title='Max loan amount=$100000000'
         value= '{{ isset($_POST['loan']) ? $_POST['loan'] : '' }}' {{old('loan')}}><br/>
         <!--Reference: Information leveraged to retain data in textboxes
          https://laracasts.com/discuss/channels/laravel/input-data-not-remaining-after-refresh-using-old?page=1-->
         <!--text input box for interest rate entry -->
         <label for='interestRate'>Interest Rate:*</label>
         <input type='number' id='interestRate' step='0.001' min='1.01' name='interestRate'
-        title="In actual numbers, e.g. for 4.5% enter 4.5, Min=1, Max=25"
+        title='In actual numbers, e.g. for 4.5% enter 4.5, Min=1, Max=25'
         value= '{{ isset($_POST['interestRate']) ? $_POST['interestRate'] : '' }}' {{old('interestRate')}}><br/>
         <!--option radio buttons for type of interest rate -->
         <b>Interest Type:*</b>
