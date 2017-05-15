@@ -19,15 +19,6 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-    <!-- jquery script to get input box tool tip-->
-    <script>
-      // html page loads up
-      $(function() {
-        // Call the documents tooltip function, find all the input elements and add their titles to the Tooltip
-        $( document ).tooltip();
-      });
-      // Reference: Input box tool tip is leveraged from this site. http://code.runnable.com/UendCJ6a52IUAABd/add-a-tool-tip-to-an-input-form-field-for-jquery
-    </script>
 
    {{--Java Script for hide/show misc features --}}
     <script type="text/javascript">
@@ -80,6 +71,14 @@
         $('#chartContainer3').fadeOut('slow');
         });
         });
+
+        //jquery script to get input box tool tip
+          // html page loads up
+          $(function() {
+            // Call the documents tooltip function, find all the input elements and add their titles to the Tooltip
+            $( document ).tooltip();
+          });
+          // Reference: Input box tool tip is leveraged from this site. http://code.runnable.com/UendCJ6a52IUAABd/add-a-tool-tip-to-an-input-form-field-for-jquery
     </script>
     <!-- Reference: Java script for click to show additional features levereged from this site.
     http://stackoverflow.com/questions/19447591/show-hide-div-when-checkbox-selected -->
