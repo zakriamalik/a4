@@ -79,8 +79,9 @@
 
 @section('error_content')
     <!--check for validation errors, if found, display and hald calculations, code leveraged from class lecture notes -->
+    <br/>
     <p>* Required fields<br/>
-       &#8224 Mouseover input box fields for input guidance.
+       &#8224; Mouseover input box fields for data entry guidance.
     </p>
     @if(count($errors) > 0)
       <h4>Data entry error found. See below: </h4>
