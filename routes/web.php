@@ -43,8 +43,6 @@ Route::post('/property/save', 'MortCalcController@saveProperty');
 
 # get route to search a mortgage loan scenario from the database
 Route::get('/scenario/search', 'MortCalcController@searchScenario');
-# get route to search a real estate property from the database
-Route::get('/property/search', 'MortCalcController@searchProperty');
 
 # get routes to show a list of items for view, add new, update/remoev an existing item
 Route::get('/scenario/load', 'MortCalcController@loadScenario');
@@ -91,41 +89,3 @@ Route::post('/property/removefeature', 'MortCalcController@deleteFeature');
 if(config('app.env')=='local'){
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 }
-
-# Test if DB is working
-# Code used from the class lecture notes
-// Route::get('/debug', function() {
-//
-// 	echo '<pre>';
-//
-// 	echo '<h1>Environment</h1>';
-// 	echo App::environment().'</h1>';
-//
-// 	echo '<h1>Debugging?</h1>';
-// 	if(config('app.debug')) echo "Yes"; else echo "No";
-//
-// 	echo '<h1>Database Config</h1>';
-//     	echo 'DB defaultStringLength: '.Illuminate\Database\Schema\Builder::$defaultStringLength;
-//     	/*
-// 	The following commented out line will print your MySQL credentials.
-// 	Uncomment this line only if you're facing difficulties connecting to the database and you
-//         need to confirm your credentials.
-//         When you're done debugging, comment it back out so you don't accidentally leave it
-//         running on your production server, making your credentials public.
-//         */
-// 	//print_r(config('database.connections.mysql'));
-//
-// 	echo '<h1>Test Database Connection</h1>';
-// 	try {
-// 		$results = DB::select('SHOW DATABASES;');
-// 		echo '<strong style="background-color:green; padding:5px;">Connection confirmed</strong>';
-// 		echo "<br><br>Your Databases:<br><br>";
-// 		print_r($results);
-// 	}
-// 	catch (Exception $e) {
-// 		echo '<strong style="background-color:crimson; padding:5px;">Caught exception: ', $e->getMessage(), "</strong>\n";
-// 	}
-//
-// 	echo '</pre>';
-//
-// });

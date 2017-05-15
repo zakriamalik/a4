@@ -1,5 +1,5 @@
 {{-- /resources/views/scenario/save.blade.php --}}
-{{-- blade view to save a new loan scenario to the database; also connects the property listing using table joins --}}
+{{-- blade view to save a new loan scenario to the database; also connects the property listing using table joins; leveraged some code from class notes -- --}}
 
 @extends('layouts.master')
 
@@ -128,13 +128,6 @@
 @endsection
 
 @section('amorttbl_content')
-    <!--conditional display of mortgage amortization table, code stored on separate php files that has table display logic (soc)-->
+  <!--blade template placeholder section, satisfies html validator requirements -->
     <h6>&nbsp;</h6>
-    {{-- @if(!empty($_GET['show_table']) && $_GET && count($errors) == 0)
-      <hr>
-        <div>
-          <h3>Mortgage Amortization Schedule</h3>
-          @include('amortTbl');
-        </div>
-    @endif --}}
 @endsection

@@ -1,5 +1,8 @@
  <?php
-
+ # Display file to show charts for loan scenarios
+ # Reference: Used the code from the following site
+ # http://canvasjs.com/php-charts/
+ # Loading up for loop arrays for the charts via loop (no calcs or logic)
  for($j = 1; $j <= $loanMonths; $j++) {
       $array_pmtNo[$j];
       $array_date[$j];
@@ -14,7 +17,8 @@
 
  ?>
 
- <div id="chartContainer"></div>
+  {{--Div to show and hide via Java Script--}}
+  <div id="chartContainer"></div>
 
     {{--Java script for chart--}}
     <script type="text/javascript">
@@ -38,9 +42,10 @@
         });
     </script>
 
+  {{--Div to show and hide via Java Script--}}
   <div id="chartContainer2"></div>
 
-     {{--Java script for chart--}}
+     {{--Java script for chart 2--}}
      <script type="text/javascript">
 
          $(function () {
@@ -62,9 +67,10 @@
          });
      </script>
 
- <div id="chartContainer3"></div>
+  {{--Div to show and hide via Java Script--}}
+  <div id="chartContainer3"></div>
 
-    {{--Java script for chart--}}
+    {{--Java script for chart 3--}}
     <script type="text/javascript">
 
         $(function () {

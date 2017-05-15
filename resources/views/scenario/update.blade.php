@@ -1,5 +1,6 @@
 {{-- /resources/views/scenario/update.blade.php --}}
-{{-- blade view to update an existing loan scenario to the database; also connects the property listing using table joins; recalculates loan figures upon save --}}
+{{-- blade view to update an existing loan scenario to the database;
+also connects the property listing using table joins; recalculates loan figures upon save; leveraged some code from class notes --}}
 
 @extends('layouts.master')
 

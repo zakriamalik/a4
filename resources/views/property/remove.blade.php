@@ -1,5 +1,5 @@
 {{-- /resources/views/property/remove.blade.php --}}
-{{-- blade view to remove a property listing from the database --}}
+{{-- blade view to remove a property listing from the database, code leveraged from class notes--}}
 
 @extends('layouts.master')
 

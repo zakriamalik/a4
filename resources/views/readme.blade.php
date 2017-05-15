@@ -2,7 +2,7 @@
 @extends('layouts.master')
 
 @section('title')
-  Mortgage Payment Calculator
+  Mortgage Loan Scenario and Property Management System
 @endsection
 
 @section('form_content')
@@ -38,17 +38,21 @@
 @endsection
 
 @section('error_content')
+  <!--blade template placeholder section, satisfies html validator requirements  -->
   <h6>&nbsp;</h6>
 @endsection
 
 @section('mortcalc_content')
+  <!--blade template placeholder section, satisfies html validator requirements  -->
   <h6>&nbsp;</h6>
 @endsection
 
 @section('loancost_content')
+  <!--blade template placeholder section, satisfies html validator requirements  -->
   <h6>&nbsp;</h6>
 @endsection
 
 @section('amorttbl_content')
+  <!--blade template placeholder section, satisfies html validator requirements  -->
   <h6>&nbsp;</h6>
 @endsection

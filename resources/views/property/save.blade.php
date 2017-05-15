@@ -1,5 +1,5 @@
 {{-- /resources/views/property/save.blade.php --}}
-{{-- blade view to save a single real estate property --}}
+{{-- blade view to save a single real estate property; leveraged some code from class notes --}}
 
 @extends('layouts.master')
 
@@ -39,19 +39,22 @@
           <option value='Condo' {{ isset($_POST['propertyType']) && $_POST['propertyType']=='Condo' ? 'Selected' : '' }} {{old('propertyType')=='Condo' ? 'Selected' : ''}} > Condo</option>
         </select><br/>
         <!--Select Option boxes for Property Size -->
-        <label for='propertySize'>Property Size:* </label>
+        <label for='propertySizeBd'>Property Size:* </label>
+        <!--Select Option boxes for Beds -->
         Bd <select name='propertySizeBd' id='propertySizeBd' title='Beds'>
             <option value=''> choose one </option>
             @for($k=1; $k<10; $k++)
               <option value= '{{$k}}' {{ isset($_POST['propertySizeBd']) && $_POST['propertySizeBd']==$k ? 'Selected' : '' }} {{old('propertySizeBd')==$k ? 'Selected' : ''}} > {{$k}}</option>
             @endfor
            </select>
+        <!--Select Option boxes for Baths -->
         Ba <select name='propertySizeBa' id='propertySizeBa' title='Baths'>
           <option value=''> choose one</option>
           @for($l=1; $l<10; $l++)
             <option value='{{$l}}' {{ isset($_POST['propertySizeBa']) && $_POST['propertySizeBa']==$l ? 'Selected' : '' }} {{old('propertySizeBa')==$l ? 'Selected' : ''}} > {{$l}}</option>
           @endfor
           </select>
+        <!--Select Option boxes for Garage -->
         Ga  <select name='propertySizeGa' id='propertySizeGa' title='Garages'>
           <option value=''> choose one</option>
           @for($m=0; $m<10; $m++)

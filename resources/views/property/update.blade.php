@@ -1,5 +1,5 @@
 {{-- /resources/views/property/update.blade.php --}}
-{{-- blade view to update a single real estate property --}}
+{{-- blade view to update a single real estate property; leveraged some code from class notes -- --}}
 
 @extends('layouts.master')
 
@@ -30,9 +30,6 @@
         <input type='text' id='propertyAddress' name='propertyAddress'
         title='Property number street name, city, state, and zip; max characters 190'
         value= '{{$properties->property_address}}' ><br/>
-        {{-- <!--input text box for Property Type -->
-        <label for='propertyType'>Property Type: </label>
-        <input type='text' id='propertyType' name='propertyType' value= '{{$properties->property_type}}' ><br/> --}}
         <!--select downdown for property type -->
         <label for='propertyType'>Select a Property Type* </label>
         <select name='propertyType' id='propertyType'>
@@ -45,27 +42,28 @@
         </select><br/>
 
         <!--Select Option boxes for Property Size -->
-        <label for='propertySize'>Property Size:* </label>
+        <label for='propertySizeBd'>Property Size:* </label>
+        <!--Select Option boxes for Beds -->
         Bd <select name='propertySizeBd' id='propertySizeBd' title='Beds'>
             <option value=''> choose one </option>
             @for($k=1; $k<10; $k++)
               <option value= '{{$k}}' {{ isset($_POST['propertySizeBd']) && $_POST['propertySizeBd']==$k ? 'Selected' : '' }} {{substr($properties->property_size,0,1)==$k ? 'Selected' : ''}} > {{$k}}</option>
             @endfor
            </select>
+        <!--Select Option boxes for Baths -->
         Ba <select name='propertySizeBa' id='propertySizeBa' title='Baths'>
           <option value=''> choose one</option>
           @for($l=1; $l<10; $l++)
             <option value='{{$l}}' {{ isset($_POST['propertySizeBa']) && $_POST['propertySizeBa']==$l ? 'Selected' : '' }} {{substr($properties->property_size,4,1)==$l ? 'Selected' : ''}} > {{$l}}</option>
           @endfor
           </select>
+        <!--Select Option boxes for Garages -->
         Ga  <select name='propertySizeGa' id='propertySizeGa' title='Garages'>
           <option value='0'> choose one</option>
           @for($m=0; $m<10; $m++)
             <option value='{{$m}}' {{ isset($_POST['propertySizeGa']) && $_POST['propertySizeGa']==$m ? 'Selected' : '' }} {{substr($properties->property_size,8,1)==$m ? 'Selected' : ''}} > {{$m}}</option>
           @endfor
           </select><br/>
-
-
 
         <!--input text box for Property Living Space -->
         <label for='livingArea'>Property Living Space (sqft):* </label>

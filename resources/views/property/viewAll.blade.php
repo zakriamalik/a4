@@ -10,6 +10,7 @@
 @section('form_content')
     <h4>Property Listings</h4>
     {!! $table->render() !!}
+    {{-- Reference: Used outside package 'laravel tables' from gbrock -> https://github.com/gbrock/laravel-table --}}
 @endsection
 
 @section('error_content')

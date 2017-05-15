@@ -67,7 +67,7 @@ class ScenariosTableSeeder extends Seeder
         'interest_rate_average' => 0.417,
         'loan_total_cost' => 192838.95,
         'loan_payments_count' => 360,
-        'property_id' => 1,
+        'property_id' => 3,
         ]);
 
         Scenario::insert([
@@ -124,7 +124,7 @@ class ScenariosTableSeeder extends Seeder
         'interest_rate_average' => 0.417,
         'loan_total_cost' => 385678.21,
         'loan_payments_count' => 360,
-        'property_id' => 2,
+        'property_id' => 5,
         ]);
 
     }

@@ -11,6 +11,8 @@ use App\Feature; # to use the Feature Model;
 use App\FeatureProperty; # to use the FeatureProperty Model;
 use Session; # to use alert and confirmation messages;
 
+# leveraged some code from class notes and examples
+
 class MortCalcController extends Controller
 {
   # main view function - landing page / default for reset

@@ -33,7 +33,7 @@
 @endsection
 
 @section('loancost_content')
-    <!--Hosting url/hyperlink back to the Mortgage Payment Calculator -->
+    <!--blade template placeholder section, satisfies html validator requirements  -->
     <h6>&nbsp;</h6>
 @endsection
 
