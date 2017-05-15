@@ -38,11 +38,28 @@
           <option value='Condo' {{ isset($_POST['propertyType']) && $_POST['propertyType']=='Condo' ? 'Selected' : '' }} {{$properties->property_type=='Condo' ? 'Selected' : ''}} > Condo</option>
         </select><br/>
 
-        <!--input text boxes for Property Size -->
-        <label>Property Size: </label>
-        Bd<input type='number' id='propertySizeBd' name='propertySizeBd' step='1' min='1' max='9' Size='5' value= '{{substr($properties->property_size,0,1)}}'>
-        Ba<input type='number' id='propertySizeBa' name='propertySizeBa' step='1' min='1' max='9' Size='5' value= '{{substr($properties->property_size,4,1)}}'>
-        Ga<input type='number' id='propertySizeGa' name='propertySizeGa' step='1' min='0' max='9' Size='5' value= '{{substr($properties->property_size,8,1)}}'><br/>
+        <!--Select Option boxes for Property Size -->
+        <label for='propertySize'>Property Size: </label>
+        Bd <select name='propertySizeBd' id='propertySizeBd'>
+            <option value=''> choose one </option>
+            @for($k=1; $k<10; $k++)
+              <option value= '{{$k}}' {{ isset($_POST['propertySizeBd']) && $_POST['propertySizeBd']==$k ? 'Selected' : '' }} {{substr($properties->property_size,0,1)==$k ? 'Selected' : ''}} > {{$k}}</option>
+            @endfor
+           </select>
+        Ba <select name='propertySizeBa' id='propertySizeBa'>
+          <option value=''> choose one</option>
+          @for($l=1; $l<10; $l++)
+            <option value='{{$l}}' {{ isset($_POST['propertySizeBa']) && $_POST['propertySizeBa']==$l ? 'Selected' : '' }} {{substr($properties->property_size,4,1)==$l ? 'Selected' : ''}} > {{$l}}</option>
+          @endfor
+          </select>
+        Ga  <select name='propertySizeGa' id='propertySizeGa'>
+          <option value='0'> choose one</option>
+          @for($m=0; $m<10; $m++)
+            <option value='{{$m}}' {{ isset($_POST['propertySizeGa']) && $_POST['propertySizeGa']==$m ? 'Selected' : '' }} {{substr($properties->property_size,8,1)==$m ? 'Selected' : ''}} > {{$m}}</option>
+          @endfor
+          </select><br/>
+
+
 
         <!--input text box for Property Living Space -->
         <label for='livingArea'>Property Living Space (sqft): </label>

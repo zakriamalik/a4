@@ -7,14 +7,27 @@
     </title>
     <meta charset='utf-8'>
     <!--referenced css style libs-->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="/css/mortcalc.css">
+    <!--referenced java script libs-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <!-- jquery script to get input box tool tip-->
+    <script>
+      // html page loads up
+      $(function() {
+        // Call the documents tooltip function, find all the input elements and add their titles to the Tooltip
+        $( document ).tooltip();
+      });
+      // Reference: Input box tool tip is leveraged from this site. http://code.runnable.com/UendCJ6a52IUAABd/add-a-tool-tip-to-an-input-form-field-for-jquery
+    </script>
 
    {{--Java Script for hide/show misc features --}}
     <script type="text/javascript">

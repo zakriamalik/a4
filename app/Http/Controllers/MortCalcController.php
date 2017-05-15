@@ -304,7 +304,7 @@ class MortCalcController extends Controller
     $scenario = Scenario::find($id);
     # If scenatio does not exist in the database, redirect to view all
     if(!$scenario) {
-        dump('Alert Message: Mortgage Loan Scenario not found in the database, cannot show/view.');
+        Session::flash('message', 'Alert Message: The mortgage loan scenario not found in the database.');
         return redirect('scenario/view');
     }
     else {
@@ -476,7 +476,7 @@ class MortCalcController extends Controller
         $scenario = Scenario::find($id);
         $properties = Property::All();
          if(!$scenario) {
-             dump('Alert Message: Mortgage Loan Scenario not found in the database.');
+             Session::flash('message', 'Alert Message: The mortgage loan scenario not found in the database.');
              return redirect('scenario/change');
          }
         return view('scenario.update')->with([
@@ -493,7 +493,7 @@ class MortCalcController extends Controller
     $properties = Property::all();
 
     if(!$scenario) {
-        dump('Alert Message: Mortgage Loan Scenario not found in the database.');
+        Session::flash('message', 'Alert Message: The mortgage loan scenario not found in the database.');
         return redirect('scenario/change');
     }
     else {
@@ -612,7 +612,7 @@ class MortCalcController extends Controller
       # Get the scenario they're attempting to delete
       $scenario = Scenario::find($id);
       if(!$scenario) {
-          dump('Alert Message: Mortgage Loan Scenario not found in the database.');
+          Session::flash('message', 'Alert Message: The mortgage loan scenario not found in the database.');
           return redirect('scenario/delete');
       }
           return view('scenario.remove')->with('scenario', $scenario);
@@ -624,7 +624,7 @@ class MortCalcController extends Controller
       $scenario = Scenario::find($request->id);
       # if scenario is not found, error messsage, else confirm removal
       if(!$scenario) {
-          dump('Alert Message: Mortgage Loan Scenario not found in the database');
+          Session::flash('message', 'Alert Message: The mortgage loan scenario not found in the database.');
           return redirect('scenario/delete');
       }
       else {
@@ -682,7 +682,7 @@ class MortCalcController extends Controller
       # Reference: Leveraged idea from here: http://stackoverflow.com/questions/17605693/laravel-4-eloquent-orm-select-where-array-as-parameter
       # if properties not found, alert message
       if(!$properties) {
-          dump('Alert Message: Property Listing not found in the database, cannot show/view.');
+          Session::flash('message', 'Alert Message: The real estate property information not found in the database.');
           return redirect('property/view');
       }
       else {
@@ -718,8 +718,8 @@ class MortCalcController extends Controller
           'propertyAddress' => 'required',
           'propertyType' => 'required',
           'propertySizeBd' => 'required|numeric|min:1|max:9',
-          'propertySizeBd' => 'required|numeric|min:1|max:9',
-          'propertySizeBd' => 'required|numeric|min:1|max:9',
+          'propertySizeBa' => 'required|numeric|min:1|max:9',
+          'propertySizeGa' => 'required|numeric|min:0|max:9',
           'livingArea' => 'required|numeric|min:1|max:10000',
           'lotSize' => 'required|numeric|min:0.01|max:10000',
           'yearBuilt' => 'required|numeric|min:1000|max:2017',
@@ -775,7 +775,7 @@ class MortCalcController extends Controller
       $features = Feature::All();
 
       if(!$properties) {
-        dump('Alert Message: The real estate property information not found in the database.');
+        Session::flash('message', 'Alert Message: The real estate property information not found in the database.');
         return redirect('property/change');
       }
       # return view with data from properties and features models
@@ -794,7 +794,7 @@ class MortCalcController extends Controller
         # condtional if property is not found
         if(!$properties) {
             # alert message using session
-            dump('Alert Message: The real estate property information not found in the database.');
+            Session::flash('message', 'Alert Message: The real estate property information not found in the database.');
             return redirect('property/change');
         }
         else {
@@ -805,8 +805,8 @@ class MortCalcController extends Controller
                 'propertyAddress' => 'required',
                 'propertyType' => 'required',
                 'propertySizeBd' => 'required|numeric|min:1|max:9',
-                'propertySizeBd' => 'required|numeric|min:1|max:9',
-                'propertySizeBd' => 'required|numeric|min:1|max:9',
+                'propertySizeBa' => 'required|numeric|min:1|max:9',
+                'propertySizeGa' => 'required|numeric|min:0|max:9',
                 'livingArea' => 'required|numeric|min:1|max:10000',
                 'lotSize' => 'required|numeric|min:0.01|max:10000',
                 'yearBuilt' => 'required|numeric|min:1000|max:2017',
@@ -848,7 +848,7 @@ class MortCalcController extends Controller
               # confirmaiton session message
               Session::flash('message', 'Confirmation Message: Real Estate Property information updated.');
         # redirect back to property update page
-        return redirect('/property/update/'.$request->id);
+        return redirect('/property/view/'.$request->id);
 
     }
   } #end of updateProperty method
@@ -859,7 +859,7 @@ class MortCalcController extends Controller
       # condition if for Property being in the database
       if(!$properties) {
           # alert session message and reurn redirect
-          dump('Alert Message: The real estate property information not found in the database.');
+          Session::flash('message', 'Alert Message: The real estate property information not found in the database.');
           return redirect('property/delete');
       }
       # return view with properties
@@ -877,7 +877,7 @@ class MortCalcController extends Controller
       # condition if the property does not exist
       if(!$properties) {
           # alert session message
-          dump('Alert Message: The real estate property information not found in the database.');
+          Session::flash('message', 'Alert Message: The real estate property information not found in the database.');
           return redirect('property/delete');
       }
       else {

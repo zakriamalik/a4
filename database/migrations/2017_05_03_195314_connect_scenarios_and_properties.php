@@ -27,6 +27,7 @@ class ConnectScenariosAndProperties extends Migration
      */
      public function down()
      {
+        
          Schema::table('scenarios', function (Blueprint $table) {
 
              # ref: http://laravel.com/docs/migrations#dropping-indexes

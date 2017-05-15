@@ -39,6 +39,14 @@ class CreateFeaturePropertyTable extends Migration
      */
     public function down()
     {
-        //
+      Schema::table('feature_property', function (Blueprint $table) {
+
+          # ref: http://laravel.com/docs/migrations#dropping-indexes
+          # combine tablename + fk field name + the word "foreign"
+          $table->dropForeign('feature_property_property_id_foreign');
+          $table->dropForeign('feature_property_feature_id_foreign');
+
+      });
+        Schema::drop('feature_property');
     }
 }

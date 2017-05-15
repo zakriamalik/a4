@@ -14,27 +14,35 @@
         <!--CSRF protection code -->
         {{ csrf_field() }}
         <!--text input box for loan scenario number -->
-        <label for='scenarioNumber'>Loan Scenario Number:</label>
-        <input type='number' id='scenarioNumber' step='1' min='1' name='scenarioNumber' value= '{{ isset($_POST['scenarioNumber']) ? $_POST['scenarioNumber'] : '' }}' {{old('scenarioNumber')}}><br/>
+        <label for='scenarioNumber'>Loan Scenario Number:*</label>
+        <input type='number' id='scenarioNumber' step='1' min='1' name='scenarioNumber'
+        title='User friendly number for identification, max number=100000000'
+        value= '{{ isset($_POST['scenarioNumber']) ? $_POST['scenarioNumber'] : '' }}' {{old('scenarioNumber')}}><br/>
         <!--text input box for loan scenario name -->
-        <label for='scenarioName'>Loan Scenario Name:</label>
-        <input type='text' id='scenarioName' name='scenarioName' value= '{{ isset($_POST['scenarioName']) ? $_POST['scenarioName'] : '' }}' {{old('scenarioName')}}><br/>
+        <label for='scenarioName'>Loan Scenario Name:*</label>
+        <input type='text' id='scenarioName' name='scenarioName'
+        title="User friendly name for Scenario, max characters 190"
+        value= '{{ isset($_POST['scenarioName']) ? $_POST['scenarioName'] : '' }}' {{old('scenarioName')}}><br/>
         <!--text input box for loan amount entry -->
-        <label for='loan'>Loan Amount:</label>
-        <input type='number' id='loan' step='0.01' min='1' name='loan' value= '{{ isset($_POST['loan']) ? $_POST['loan'] : '' }}' {{old('loan')}}><br/>
+        <label for='loan'>Loan Amount:*</label>
+        <input type='number' id='loan' step='0.01' min='1' name='loan'
+        title="Max loan amount=$100000000"
+        value= '{{ isset($_POST['loan']) ? $_POST['loan'] : '' }}' {{old('loan')}}><br/>
         <!--Reference: Information leveraged to retain data in textboxes
          https://laracasts.com/discuss/channels/laravel/input-data-not-remaining-after-refresh-using-old?page=1-->
         <!--text input box for interest rate entry -->
-        <label for='interestRate'>Interest Rate:</label>
-        <input type='number' id='interestRate' step='0.001' min='1.01' name='interestRate' value= '{{ isset($_POST['interestRate']) ? $_POST['interestRate'] : '' }}' {{old('interestRate')}}><br/>
+        <label for='interestRate'>Interest Rate:*</label>
+        <input type='number' id='interestRate' step='0.001' min='1.01' name='interestRate'
+        title="In actual numbers, e.g. for 4.5% enter 4.5, Min=1, Max=25"
+        value= '{{ isset($_POST['interestRate']) ? $_POST['interestRate'] : '' }}' {{old('interestRate')}}><br/>
         <!--option radio buttons for type of interest rate -->
-        <b>Interest Type:</b>
+        <b>Interest Type:*</b>
         <label><input type='radio' name='interestType' value='fixed' {{ isset($_POST['interestType']) && $_POST['interestType']=='fixed' ? 'checked' : '' }} {{old('interestType')=='fixed' ? 'checked' : ''}}> Fixed</label>
         <label><input type='radio' name='interestType' value='variable' {{ isset($_POST['interestType']) && $_POST['interestType']=='variable' ? 'checked' : '' }} {{old('interestType')=='variable'  ? 'checked' : ''}}> Variable</label><br/>
         <!--Reference: Information leveraged to retain option boxes checked
         https://laracasts.com/discuss/channels/laravel/sex-radio-input-options-old-input-->
         <!--select downdown for duration of loan in years -->
-        <label for='loanDuration'>Select loan duration</label>
+        <label for='loanDuration'>Select loan duration*</label>
         <select name='loanDuration' id='loanDuration'>
           <option value=''> Select one</option>
           <option value='15' {{ isset($_POST['loanDuration']) && $_POST['loanDuration']=='15' ? 'Selected' : '' }} {{old('loanDuration')=='15' ? 'Selected' : ''}} > 15 yrs</option>
@@ -47,6 +55,7 @@
 
         <!--select downdown for property name populated by database, to attach property listing to the loan scenario using laravel model and database joins -->
         <!--leveraged example from class notes http://dwa15.com -->
+        <label for='property'>Select a property*</label>
         <select name='property' id='property'>
           <option value='0'>Choose</option>
             @foreach($properties as $properties)
@@ -70,7 +79,9 @@
 
 @section('error_content')
     <!--check for validation errors, if found, display and hald calculations, code leveraged from class lecture notes -->
-    <h6>&nbsp;</h6>
+    <p>* Required fields<br/>
+       &#8224 Mouseover input box fields for input guidance.
+    </p>
     @if(count($errors) > 0)
       <h4>Data entry error found. See below: </h4>
         <ul>
