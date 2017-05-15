@@ -79,7 +79,7 @@
 
 @section('error_content')
     <!--check for validation errors, if found, display and hald calculations, code leveraged from class lecture notes -->
-    <br/>
+    <h6>&nbsp;</h6><br/>
     <p>* Required fields<br/>
        &#8224; Mouseover input box fields for data entry guidance.
     </p>
