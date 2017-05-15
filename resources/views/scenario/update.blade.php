@@ -60,24 +60,24 @@ also connects the property listing using table joins; recalculates loan figures 
 
         <!--number read only box for interest rate monthly entry -->
         <label for='interestRateMonthly'>Interest Rate Monthly:</label>
-        <input type='number' id='interestRateMonthly' name='interestRateMonthly' value= {{$scenario->interest_rate_monthly}} disabled><br/>
+        <input type='number' id='interestRateMonthly' name='interestRateMonthly' value= {{round($scenario->interest_rate_monthly,3)}} disabled><br/>
         <!--number read only box for loan duration months -->
         <label for='loanDurationMonthly'>Loan Duration Months:</label>
         <input type='number' id='loanDurationMonthly' name='loanDurationMonthly' value= '{{$scenario->loan_duration_months}}' disabled> <br/>
         <!--number read only box for loan monthly payment -->
         <label for='loanMonthlyPayment'>Loan Monthly Payment:</label>
-        <input type='number' id='loanMonthlyPayment' name='loanMonthlyPayment' value= '{{$scenario->loan_monthly_payment}}' disabled><br/>
+        <input type='number' id='loanMonthlyPayment' name='loanMonthlyPayment' value= '{{round($scenario->loan_monthly_payment,2)}}' disabled><br/>
         <!--number read only box for total interest paid -->
         <label for='interestTotalPaid'>Total Interest Paid:</label>
-        <input type='number' id='interestTotalPaid' name='interestTotalPaid' value= '{{$scenario->interest_total_paid}}' disabled><br/>
+        <input type='number' id='interestTotalPaid' name='interestTotalPaid' value= '{{round($scenario->interest_total_paid,2)}}' disabled><br/>
         <!--number read only box for avg interest rate -->
-        <label for='interestRateAvg'>Total Interest Paid:</label>
-        <input type='number' id='interestRateAvg' name='interestRateAvg' value= '{{$scenario->interest_rate_average}}' disabled><br/>
+        <label for='interestRateAvg'>Average Monthly Interest Rate:</label>
+        <input type='number' id='interestRateAvg' name='interestRateAvg' value= '{{round($scenario->interest_rate_average,3)}}' disabled><br/>
         <!--number read only box for total loan cost -->
-        <label for='loanTotalCost'>Total Interest Paid:</label>
-        <input type='number' id='loanTotalCost' name='loanTotalCost' value= '{{$scenario->loan_total_cost}}' disabled><br/>
+        <label for='loanTotalCost'>Total Cost of the Loan:</label>
+        <input type='number' id='loanTotalCost' name='loanTotalCost' value= '{{round($scenario->loan_total_cost,2)}}' disabled><br/>
         <!--number read only box for total loan payments -->
-        <label for='loanTotalPayments'>Total Interest Paid:</label>
+        <label for='loanTotalPayments'>Total Number of Monthly Payments:</label>
         <input type='number' id='loanTotalPayments' name='loanTotalPayments' value= '{{$scenario->loan_payments_count}}' disabled><br/>
 
         <!--select downdown for property name populated by database, to attach property listing to the loan scenario using laravel model and database joins -->
